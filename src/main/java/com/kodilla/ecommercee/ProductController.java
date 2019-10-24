@@ -10,7 +10,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/ecommerce")
+@RequestMapping("/v1/product")
 public class ProductController {
     @RequestMapping(method = RequestMethod.GET, value = "getProducts")
     public List<ProductDto> getProducts() {

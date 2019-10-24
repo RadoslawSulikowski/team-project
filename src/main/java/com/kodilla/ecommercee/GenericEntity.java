@@ -1,5 +1,7 @@
 package com.kodilla.ecommercee;
 
+import org.springframework.context.annotation.Bean;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
