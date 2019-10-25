@@ -18,9 +18,9 @@ public class CartController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getProducts")
-    public List<ProductDto> getAllProducts(Cart cart) {
+    public List<String> getAllProducts(Cart cart) {
         return new ArrayList<>();
-    }
+    }  //String to Product
 
     @RequestMapping(method = RequestMethod.PUT, value = "addProduct")
     public String addProduct(@RequestParam Long productId, @RequestParam String cartId) {
@@ -33,7 +33,7 @@ public class CartController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createOrder")
-    public OrderDto createOrder(@RequestParam String cartId) {
-        return new OrderDto(1445L, new Cart());
+    public String createOrder(@RequestParam String cartId) { // String to Order
+        return "The order has been created.";
     }
 }

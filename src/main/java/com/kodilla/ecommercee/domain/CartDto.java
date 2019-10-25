@@ -4,9 +4,9 @@ import java.util.List;
 
 public class CartDto {
     private Long cartId;
-    private List<Product> items;
+    private List<String> items;
 
-    public CartDto(Long cartId, List<Product> items) {
+    public CartDto(Long cartId, List<String> items) {
         this.cartId = cartId;
         this.items = items;
     }
@@ -15,7 +15,7 @@ public class CartDto {
         return cartId;
     }
 
-    public List<Product> getItems() {
+    public List<String> getItems() {
         return items;
     }
 }
