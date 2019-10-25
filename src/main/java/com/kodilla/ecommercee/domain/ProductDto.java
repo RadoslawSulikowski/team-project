@@ -9,11 +9,12 @@ public class ProductDto {
     private BigDecimal price;
     private Long groupId;
 
-    public ProductDto(Long id, String name, String description, BigDecimal price) {
+    public ProductDto(Long id, String name, String description, BigDecimal price, Long groupId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.groupId = groupId;
     }
 
     public ProductDto() {
@@ -37,10 +38,6 @@ public class ProductDto {
 
     public Long getGroupId() {
         return groupId;
-    }
-
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
     }
 
     @Override

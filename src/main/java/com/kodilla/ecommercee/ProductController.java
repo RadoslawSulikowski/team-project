@@ -19,8 +19,8 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getProduct")
-    public ProductDto getProduct(@RequestParam Long id) /*throws ProductNotFoundException*/ {
-        return new ProductDto(id, "Test name", "Test desc", new BigDecimal(100));
+    public ProductDto getProduct(@RequestParam Long id) throws ProductNotFoundException {
+        return new ProductDto(id, "Test name", "Test desc", new BigDecimal(100), 1L);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createProduct", consumes = APPLICATION_JSON_VALUE)
@@ -30,7 +30,7 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateProduct")
     public ProductDto updateProduct(@RequestBody ProductDto productDto) {
-        return new ProductDto(productDto.getId(), productDto.getName(), productDto.getDescription(), productDto.getPrice());
+        return new ProductDto(productDto.getId(), productDto.getName(), productDto.getDescription(), productDto.getPrice(), productDto.getGroupId());
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteProduct")
