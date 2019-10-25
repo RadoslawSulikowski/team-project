@@ -12,7 +12,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RequestMapping("/v1/group")
 public class GroupController {
     @RequestMapping(method = RequestMethod.GET, value = "getGroups")
-    public List<GroupDto> getOrders(){
+    public List<GroupDto> getGroups(){
         return new ArrayList<>();
     }
     @RequestMapping(method = RequestMethod.GET, value = "getGroup")
