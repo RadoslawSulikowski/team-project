@@ -29,7 +29,7 @@ public class CartController {
         return "The product has been successfully deleted from the cart.";
     }
     @RequestMapping(method = RequestMethod.POST, value = "createOrder")
-    public OrderDto createOrder(CartDto cartDto) {
-        return new OrderDto(1445L, new Cart(4345L, new ArrayList<>()));
+    public OrderDto createOrder(@RequestParam Cart cart) {
+        return new OrderDto(1445L, cart);
     }
 }
