@@ -16,20 +16,24 @@ public class CartController {
     public CartDto createCart() {
         return new CartDto(123L, new ArrayList<>());
     }
+
     @RequestMapping(method = RequestMethod.GET, value = "getProducts")
     public List<ProductDto> getAllProducts(Cart cart) {
         return new ArrayList<>();
     }
+
     @RequestMapping(method = RequestMethod.PUT, value = "addProduct")
-    public String addProduct(@RequestParam Long productId, @RequestParam Cart cart) {
+    public String addProduct(@RequestParam Long productId, @RequestParam String cartId) {
         return "The product has been successfully added to the cart.";
     }
+
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteProduct")
-    public String deleteProduct(@RequestParam Long productId, @RequestParam Cart cart) {
+    public String deleteProduct(@RequestParam Long productId, @RequestParam String cartId) {
         return "The product has been successfully deleted from the cart.";
     }
+
     @RequestMapping(method = RequestMethod.POST, value = "createOrder")
-    public OrderDto createOrder(@RequestParam Cart cart) {
-        return new OrderDto(1445L, cart);
+    public OrderDto createOrder(@RequestParam String cartId) {
+        return new OrderDto(1445L, new Cart());
     }
 }
