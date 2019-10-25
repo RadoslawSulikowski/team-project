@@ -4,6 +4,7 @@ import com.kodilla.ecommercee.domain.ProductDto;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getProduct")
-    public ProductDto getProduct(@RequestParam Long id) throws EntityNotFoundException {
-        return new ProductDto(id, "Test value");
+    public ProductDto getProduct(@RequestParam Long id) /*throws ProductNotFoundException*/ {
+        return new ProductDto(id, "Test name", "Test desc", new BigDecimal(100));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createProduct", consumes = APPLICATION_JSON_VALUE)
@@ -29,7 +30,7 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateProduct")
     public ProductDto updateProduct(@RequestBody ProductDto productDto) {
-        return new ProductDto(productDto.getId(), productDto.getValue());
+        return new ProductDto(productDto.getId(), productDto.getName(), productDto.getDescription(), productDto.getPrice());
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteProduct")
