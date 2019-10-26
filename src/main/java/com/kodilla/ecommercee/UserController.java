@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee;
 
+import com.kodilla.ecommercee.domain.UserDto;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,14 +13,14 @@ public class UserController {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "blockUser")
+    @RequestMapping(method = RequestMethod.DELETE, value = "blockUser")
     public String blockUser(@RequestParam String getUsername) {
-        return getUsername + " blocked";
+        return getUsername + " is blocked";
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "oneHourAPI")
-    public UserDto oneHourAPI(@RequestBody UserDto userDto) {
-        return userDto;
+    @RequestMapping(method = RequestMethod.PUT, value = "oneHourUserKey")
+    public Long oneHourUserKey(@RequestBody UserDto userDto) {
+        return userDto.getUserKey();
 
     }
 }

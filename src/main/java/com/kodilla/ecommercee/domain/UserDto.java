@@ -1,4 +1,4 @@
-package com.kodilla.ecommercee;
+package com.kodilla.ecommercee.domain;
 
 public class UserDto {
     private Integer id;
@@ -11,6 +11,9 @@ public class UserDto {
         this.username = username;
         this.status = status;
         this.userKey = userKey;
+    }
+    public UserDto(){
+
     }
 
     public Integer getId() {
