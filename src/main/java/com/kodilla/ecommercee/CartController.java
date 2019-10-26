@@ -34,7 +34,7 @@ public class CartController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createOrder")
-    public String createOrder(@RequestParam String cartId) throws CartNotFoundException {     // String to Order
+    public String createOrder(@RequestParam Long cartId) throws CartNotFoundException {     // String to Order
         return "The order has been created.";
     }
 }
