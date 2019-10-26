@@ -13,12 +13,12 @@ public class UserController {
 
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "blockUser")
+    @RequestMapping(method = RequestMethod.PUT, value = "blockUser")
     public String blockUser(@RequestParam String getUsername) {
         return getUsername + " is blocked";
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "oneHourUserKey")
+    @RequestMapping(method = RequestMethod.POST, value = "oneHourUserKey")
     public Long oneHourUserKey(@RequestBody UserDto userDto) {
         return userDto.getUserKey();
 
