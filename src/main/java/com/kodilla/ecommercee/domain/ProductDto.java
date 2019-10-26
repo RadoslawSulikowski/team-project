@@ -3,22 +3,25 @@ package com.kodilla.ecommercee.domain;
 import java.math.BigDecimal;
 
 public class ProductDto {
-    private Long productId;
+    private Long id;
     private String name;
     private String description;
     private BigDecimal price;
     private Long groupId;
 
-    public ProductDto(Long productId, String name, String description, BigDecimal price, Long groupId) {
-        this.productId = productId;
+    public ProductDto(Long id, String name, String description, BigDecimal price, Long groupId) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.groupId = groupId;
     }
 
-    public Long getProductId() {
-        return productId;
+    public ProductDto() {
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -35,5 +38,16 @@ public class ProductDto {
 
     public Long getGroupId() {
         return groupId;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", groupId=" + groupId +
+                '}';
     }
 }
