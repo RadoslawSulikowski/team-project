@@ -1,6 +1,7 @@
 package com.kodilla.ecommercee;
 
 import com.kodilla.ecommercee.domain.*;
+import com.kodilla.ecommercee.exceptions.CartNotFoundException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,22 +19,22 @@ public class CartController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getProducts")
-    public List<String> getAllProducts(Cart cart) {
+    public List<String> getAllProducts(@RequestParam Long cartId) throws CartNotFoundException {   //String to Product
         return new ArrayList<>();
-    }  //String to Product
+    }
 
     @RequestMapping(method = RequestMethod.PUT, value = "addProduct")
-    public String addProduct(@RequestParam Long productId, @RequestParam String cartId) {
+    public String addProduct(@RequestParam Long productId, @RequestParam Long cartId) throws CartNotFoundException {
         return "The product has been successfully added to the cart.";
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteProduct")
-    public String deleteProduct(@RequestParam Long productId, @RequestParam String cartId) {
+    public String deleteProduct(@RequestParam Long productId, @RequestParam Long cartId) throws CartNotFoundException {
         return "The product has been successfully deleted from the cart.";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createOrder")
-    public String createOrder(@RequestParam String cartId) { // String to Order
+    public String createOrder(@RequestParam String cartId) throws CartNotFoundException {     // String to Order
         return "The order has been created.";
     }
 }
