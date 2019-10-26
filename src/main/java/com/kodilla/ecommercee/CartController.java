@@ -19,22 +19,19 @@ public class CartController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getProducts")
-    public List<String> getAllProducts(@RequestParam Long cartId) throws CartNotFoundException {   //String to Product
+    public List<ProductDto> getAllProducts(@RequestParam Long cartId) throws CartNotFoundException {
         return new ArrayList<>();
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "addProduct")
-    public String addProduct(@RequestParam Long productId, @RequestParam Long cartId) throws CartNotFoundException {
-        return "The product has been successfully added to the cart.";
+    public void addProduct(@RequestParam Long productId, @RequestParam Long cartId) throws CartNotFoundException {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteProduct")
-    public String deleteProduct(@RequestParam Long productId, @RequestParam Long cartId) throws CartNotFoundException {
-        return "The product has been successfully deleted from the cart.";
+    public void deleteProduct(@RequestParam Long productId, @RequestParam Long cartId) throws CartNotFoundException {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createOrder")
-    public String createOrder(@RequestParam Long cartId) throws CartNotFoundException {     // String to Order
-        return "The order has been created.";
+    public void createOrder(@RequestParam Long cartId) throws CartNotFoundException {
     }
 }
