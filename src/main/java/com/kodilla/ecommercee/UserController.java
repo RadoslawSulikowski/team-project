@@ -9,7 +9,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, value = "createUser")
     public String createUser(@RequestBody UserDto userDto) {
-        return "Create new user: " +userDto.getId() +" "+userDto.getUsername();
+        return "Create new user: " + userDto.getId() + " " + userDto.getUsername();
 
     }
 
