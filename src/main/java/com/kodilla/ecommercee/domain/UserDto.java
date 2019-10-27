@@ -3,10 +3,10 @@ package com.kodilla.ecommercee.domain;
 public class UserDto {
     private Integer id;
     private String username;
-    private Integer status;
+    private String status;
     private Long userKey;
 
-    public UserDto(Integer id, String username, Integer status, Long userKey) {
+    public UserDto(Integer id, String username, String status, Long userKey) {
         this.id = id;
         this.username = username;
         this.status = status;
@@ -24,7 +24,7 @@ public class UserDto {
         return username;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
