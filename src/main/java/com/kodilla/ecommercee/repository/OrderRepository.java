@@ -1,4 +1,4 @@
-package com.kodilla.ecommercee.domain.dao;
+package com.kodilla.ecommercee.repository;
 
 import com.kodilla.ecommercee.domain.Order;
 import org.springframework.data.repository.CrudRepository;
@@ -8,5 +8,6 @@ import javax.transaction.Transactional;
 
 @Transactional
 @Repository
-public interface OrderDao extends CrudRepository<Order, Long> {
+public interface OrderRepository extends CrudRepository<Order, Long> {
+
 }
