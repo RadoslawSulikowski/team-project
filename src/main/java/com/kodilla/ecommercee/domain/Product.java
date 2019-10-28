@@ -18,7 +18,7 @@ public class Product {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.groupId = groupId;
+
     }
     public Product() {
 
@@ -27,6 +27,22 @@ public class Product {
     public Long getId() {
         return id;
     }
+
+   /* @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_id", referencedColumnName = "id")
+    private Group group;*/
+
+   /* @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order orders;*/
+
+    /*@OneToMany(
+            targetEntity = Cart.class,
+            mappedBy = "product",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Cart> carts;*/
 
     public String getName() {
         return name;
