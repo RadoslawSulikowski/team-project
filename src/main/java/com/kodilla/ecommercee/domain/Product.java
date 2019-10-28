@@ -12,14 +12,13 @@ public class Product {
     private String name;
     private String description;
     private BigDecimal price;
-    private Long groupId;
 
-    public Product(String name, String description, BigDecimal price, Long groupId) {
+    public Product(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
-
     }
+
     public Product() {
 
     }
@@ -28,7 +27,8 @@ public class Product {
         return id;
     }
 
-   /* @OneToOne(cascade = CascadeType.ALL)
+   /* @OneToOne(cascade = CascadeType.ALL,
+                fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", referencedColumnName = "id")
     private Group group;*/
 
@@ -56,9 +56,6 @@ public class Product {
         return price;
     }
 
-    public Long getGroupId() {
-        return groupId;
-    }
 
     public void setId(Long id) {
         this.id = id;
@@ -76,7 +73,4 @@ public class Product {
         this.price = price;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
 }
