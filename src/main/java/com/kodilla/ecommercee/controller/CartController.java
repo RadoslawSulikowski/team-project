@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/cart")
 public class CartController {
-
     @RequestMapping(method = RequestMethod.POST, value = "createCart")
     public CartDto createCart() {
         return new CartDto(123L, new ArrayList<>());
