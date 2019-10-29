@@ -12,6 +12,7 @@ public class Product {
     private String name;
     private String description;
     private BigDecimal price;
+    private Long groupId;
 
     public Product(String name, String description, BigDecimal price) {
         this.name = name;
@@ -42,7 +43,33 @@ public class Product {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    private List<Cart> carts;*/
+    private List<Cart> carts;
+
+    public Group getGroup() {
+        return group;
+     }
+
+    public Order getOrder() {
+        return orders;
+      }
+
+     public List<Cart> getCarts() {
+        return carts;
+      }
+
+      public void setGroup(Group group) {
+        this.group = group;
+      }
+
+      public void setOrder(Order orders) {
+        this.orders = orders;
+      }
+
+      public void setCart(List<Cart> carts) {
+        this.carts = carts;
+      }
+     */
+
 
     public String getName() {
         return name;
@@ -56,6 +83,9 @@ public class Product {
         return price;
     }
 
+    public Long getGroupId() {
+        return groupId;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -73,4 +103,7 @@ public class Product {
         this.price = price;
     }
 
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
 }
