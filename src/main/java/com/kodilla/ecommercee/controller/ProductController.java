@@ -1,7 +1,7 @@
 package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
 import com.kodilla.ecommercee.domain.ProductDto;
+import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
