@@ -25,7 +25,7 @@ public class GroupController {
     public void createGroup(@RequestBody GroupDto group){
         System.out.println("Creating new group");
     }
-
+  
     @RequestMapping(method = RequestMethod.PUT, value = "updateGroup", consumes = APPLICATION_JSON_VALUE)
     public GroupDto updateGroup(@RequestBody GroupDto group){
         return new GroupDto(1l, "ubrania dla dzieci");
