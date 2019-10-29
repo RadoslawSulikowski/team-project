@@ -7,16 +7,16 @@ import java.util.List;
 @Entity(name = "CARTS")
 public class Cart {
 
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)*/
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cartId;
 
     /*@OneToMany(
             targetEntity = Product.class,
-            mappedBy = "product",
+            mappedBy = "cart",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)*/
-    private List<ProductDto> products = new ArrayList<>();
+            fetch = FetchType.LAZY)
+    private List<Product> products = new ArrayList<>();*/
 
     public Cart() {
     }
@@ -25,7 +25,15 @@ public class Cart {
         return cartId;
     }
 
-    public List<ProductDto> getProducts() {
+    /*public List<Product> getProducts() {
         return products;
+    }*/
+
+    public void setCartId(Long cartId) {
+        this.cartId = cartId;
     }
+
+    /*public void setProducts(List<Product> products) {
+        this.products = products;
+    }*/
 }
