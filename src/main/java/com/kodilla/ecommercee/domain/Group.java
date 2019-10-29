@@ -2,8 +2,9 @@ package com.kodilla.ecommercee.domain;
 
 import javax.persistence.*;
 
-@Entity(name = "PRODUCT_GROUPS")
-public class Groups {
+@Entity
+@Table(name = "PRODUCT_GROUPS")
+public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -11,11 +12,11 @@ public class Groups {
 
     private String name;
 
-    public Groups(String name) {
+    public Group(String name) {
         this.name = name;
     }
 
-    public Groups() {
+    public Group() {
     }
 
     public Long getId() {
