@@ -27,7 +27,7 @@ public class CartTestSuite {
         Cart cart1 = new Cart();
         Cart cart2 = new Cart();
         Product product1 = new Product("Kurtka", "Kurtka zimowa", new BigDecimal(100));
-        Product product2 = new Product ("Płaszcz", "Płaszcz zimowy, męski", new BigDecimal(150));
+        Product product2 = new Product("Płaszcz", "Płaszcz zimowy, męski", new BigDecimal(150));
         cartRepository.save(cart1);
         cartRepository.save(cart2);
 
