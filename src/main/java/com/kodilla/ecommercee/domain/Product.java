@@ -28,14 +28,18 @@ public class Product {
         return id;
     }
 
-   /* @OneToOne(cascade = CascadeType.ALL,
-                fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private Order order;*/
-
    /* @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne
     @JoinColumn(name = "group_id")
-    private Group group;*/
+    private Group group;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+    */
 
     /*
     public Group getGroup() {
@@ -46,14 +50,21 @@ public class Product {
         return order;
       }
 
-      public void setGroup(Group group) {
+    public Cart getCart() {
+      return cart;
+    }
+
+    public void setGroup(Group group) {
         this.group = group;
       }
 
-      public void setOrder(Order order) {
+    public void setOrder(Order order) {
         this.order = order;
       }
 
+    public void setCart(Cart cart) {
+        this.cart = cart;
+      }
      */
 
 
