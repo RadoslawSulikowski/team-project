@@ -64,7 +64,6 @@ public class Product {
         this.cart = cart;
     }
 
-
     public String getName() {
         return name;
     }
