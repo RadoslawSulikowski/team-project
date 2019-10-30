@@ -29,13 +29,13 @@ public class Product {
     }
 
    /* @OneToOne(cascade = CascadeType.ALL,
-                fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id", referencedColumnName = "id")
-    private Group group;*/
+                fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Order order;*/
 
    /* @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order orders;*/
+    @JoinColumn(name = "group_id")
+    private Group group;*/
 
     /*
     public Group getGroup() {
@@ -43,15 +43,15 @@ public class Product {
      }
 
     public Order getOrder() {
-        return orders;
+        return order;
       }
 
       public void setGroup(Group group) {
         this.group = group;
       }
 
-      public void setOrder(Order orders) {
-        this.orders = orders;
+      public void setOrder(Order order) {
+        this.order = order;
       }
 
      */
