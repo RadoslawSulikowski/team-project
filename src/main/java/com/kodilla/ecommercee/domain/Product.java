@@ -28,7 +28,7 @@ public class Product {
         return id;
     }
 
-   /* @ManyToOne
+   @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
 
@@ -39,9 +39,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart;
-    */
 
-    /*
     public Group getGroup() {
         return group;
      }
@@ -65,7 +63,6 @@ public class Product {
     public void setCart(Cart cart) {
         this.cart = cart;
       }
-     */
 
 
     public String getName() {
