@@ -37,24 +37,13 @@ public class Product {
     @JoinColumn(name = "order_id")
     private Order orders;*/
 
-    /*@OneToMany(
-            targetEntity = Cart.class,
-            mappedBy = "product",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private List<Cart> carts;
-
+    /*
     public Group getGroup() {
         return group;
      }
 
     public Order getOrder() {
         return orders;
-      }
-
-     public List<Cart> getCarts() {
-        return carts;
       }
 
       public void setGroup(Group group) {
@@ -65,9 +54,6 @@ public class Product {
         this.orders = orders;
       }
 
-      public void setCart(List<Cart> carts) {
-        this.carts = carts;
-      }
      */
 
 
