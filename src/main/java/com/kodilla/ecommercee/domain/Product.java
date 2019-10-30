@@ -12,6 +12,8 @@ public class Product {
     private String name;
     private String description;
     private BigDecimal price;
+    private Long groupId;
+
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
