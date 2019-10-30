@@ -10,17 +10,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
 
-//    @OneToMany(
-//            targetEntity = Product.class,
-//            mappedBy = "order",
-//            cascade = CascadeType.ALL,
-//            fetch = FetchType.LAZY
-//    )
-//    private List<Product> products;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @OneToMany(
+            targetEntity = Product.class,
+            mappedBy = "order",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Product> products;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Order() {
     }
@@ -33,19 +33,19 @@ public class Order {
         this.orderId = orderId;
     }
 
-//    public List<Product> getProduct() {
-//        return products;
-//    }
-//
-//    public void setProduct(List<Product> product) {
-//        this.product = products;
-//    }
-//
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public List<Product> getProduct() {
+        return products;
+    }
+
+    public void setProduct(List<Product> products) {
+        this.products = products;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

@@ -11,12 +11,12 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cartId;
 
-    /*@OneToMany(
+    @OneToMany(
             targetEntity = Product.class,
             mappedBy = "cart",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private List<Product> products = new ArrayList<>();*/
+    private List<Product> products = new ArrayList<>();
 
     public Cart() {
     }
@@ -25,15 +25,15 @@ public class Cart {
         return cartId;
     }
 
-    /*public List<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
-    }*/
+    }
 
     public void setCartId(Long cartId) {
         this.cartId = cartId;
     }
 
-    /*public void setProducts(List<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
-    }*/
+    }
 }
