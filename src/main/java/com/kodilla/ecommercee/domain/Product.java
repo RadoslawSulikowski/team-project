@@ -26,7 +26,7 @@ public class Product {
 
     public Long getId() {
         return id;
-    }
+    }g
 
     @ManyToOne
     @JoinColumn(name = "order_id")
