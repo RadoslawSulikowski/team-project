@@ -52,18 +52,6 @@ public class Product {
         return cart;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
     public String getName() {
         return name;
     }
@@ -98,5 +86,17 @@ public class Product {
 
     public void setGroupId(Long groupId) {
         this.groupId = groupId;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
