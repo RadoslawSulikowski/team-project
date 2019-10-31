@@ -12,7 +12,6 @@ public class Product {
     private String name;
     private String description;
     private BigDecimal price;
-    private String sGroupId;
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
@@ -24,11 +23,10 @@ public class Product {
     private Cart cart;
 
 
-    public Product(String name, String description, BigDecimal price, String sGroupId) {
+    public Product(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.sGroupId = sGroupId;
     }
 
     public Product() {
@@ -50,10 +48,6 @@ public class Product {
 
     public BigDecimal getPrice() {
         return price;
-    }
-
-    public String getSGroupId() {
-        return sGroupId;
     }
 
     public Group getGroup() {
@@ -83,10 +77,6 @@ public class Product {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public void setSGroupId(String sGroupId) {
-        this.sGroupId = sGroupId;
     }
 
     public void setGroup(Group group) {
