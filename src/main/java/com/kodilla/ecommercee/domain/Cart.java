@@ -10,7 +10,6 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cartId;
-
     @OneToMany(
             targetEntity = Product.class,
             mappedBy = "cart",
@@ -18,8 +17,10 @@ public class Cart {
             fetch = FetchType.LAZY)
     private List<Product> products = new ArrayList<>();
 
+
     public Cart() {
     }
+
 
     public Long getCartId() {
         return cartId;
@@ -28,6 +29,7 @@ public class Cart {
     public List<Product> getProducts() {
         return products;
     }
+
 
     public void setCartId(Long cartId) {
         this.cartId = cartId;
