@@ -33,7 +33,6 @@ public class Cart {
         return products;
     }
 
-
     public void setCartId(Long cartId) {
         this.cartId = cartId;
     }

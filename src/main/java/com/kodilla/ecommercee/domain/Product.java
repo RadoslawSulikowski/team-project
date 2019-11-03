@@ -52,16 +52,15 @@ public class Product {
 
     public Group getGroup() {
         return group;
-     }
+    }
 
     public Order getOrder() {
         return order;
-      }
+    }
 
     public Cart getCart() {
       return cart;
     }
-
 
     public void setId(Long id) {
         this.id = id;
