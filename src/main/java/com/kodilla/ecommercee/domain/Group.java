@@ -1,7 +1,6 @@
 package com.kodilla.ecommercee.domain;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,15 +10,8 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    @OneToMany(
-            targetEntity = Product.class,
-            mappedBy = "group",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private List<Product> products = new ArrayList<>();
 
+    private String name;
 
     public Group(String name) {
         this.name = name;
@@ -27,7 +19,6 @@ public class Group {
 
     public Group() {
     }
-
 
     public Long getId() {
         return id;
@@ -41,10 +32,18 @@ public class Group {
         return name;
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
+
+
+    @OneToMany(
+            targetEntity = Product.class,
+            mappedBy = "group",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY
+    )
+    private List<Product> products;
 
     public List<Product> getProducts() {
         return products;

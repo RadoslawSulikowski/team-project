@@ -19,8 +19,6 @@ public class User {
             cascade = CascadeType.ALL,fetch = FetchType.LAZY
     )
     private List<Order> orders = new ArrayList<>();
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Cart cart;
 
     public User(String username, String status, Long userKey) {
         this.username = username;
@@ -46,6 +44,7 @@ public class User {
     public Long getUserKey() {
         return userKey;
     }
+
 
     public List<Order> getOrders() {
         return orders;

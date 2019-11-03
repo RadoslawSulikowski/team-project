@@ -12,16 +12,7 @@ public class Product {
     private String name;
     private String description;
     private BigDecimal price;
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    private Group group;
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
+    //private Long groupId;
 
     public Product(String name, String description, BigDecimal price) {
         this.name = name;
@@ -33,10 +24,49 @@ public class Product {
 
     }
 
-
     public Long getId() {
         return id;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
+
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public Cart getCart() {
+      return cart;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+
 
     public String getName() {
         return name;
@@ -50,17 +80,9 @@ public class Product {
         return price;
     }
 
-    public Group getGroup() {
-        return group;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public Cart getCart() {
-      return cart;
-    }
+    /*public Long getGroupId() {
+        return groupId;
+    }*/
 
     public void setId(Long id) {
         this.id = id;
@@ -78,15 +100,7 @@ public class Product {
         this.price = price;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
+    /*public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }*/
 }
