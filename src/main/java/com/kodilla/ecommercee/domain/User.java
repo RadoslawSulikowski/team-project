@@ -13,12 +13,15 @@ public class User {
     private String username;
     private String status;
     private Long userKey;
-    /*@OneToMany(
+    @OneToMany(
             targetEntity = Order.class,
             mappedBy = "user",
             cascade = CascadeType.ALL,fetch = FetchType.LAZY
     )
-    private List<Order> orders = new ArrayList<>();*/
+    private List<Order> orders = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Cart cart;
+
 
     public User(String username, String status, Long userKey) {
         this.username = username;
@@ -28,6 +31,7 @@ public class User {
 
     public User() {
     }
+
 
     public Integer getId() {
         return id;
@@ -45,10 +49,10 @@ public class User {
         return userKey;
     }
 
-    /*
     public List<Order> getOrders() {
         return orders;
-    }*/
+    }
+
 
     public void setId(Integer id) {
         this.id = id;
@@ -66,7 +70,7 @@ public class User {
         this.userKey = userKey;
     }
 
-    /*public void setOrders(List<Order> orders) {
+    public void setOrders(List<Order> orders) {
         this.orders = orders;
-    }*/
+    }
 }
