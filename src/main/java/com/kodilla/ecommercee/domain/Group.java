@@ -1,6 +1,7 @@
 package com.kodilla.ecommercee.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "PRODUCT_GROUPS")
@@ -35,11 +36,11 @@ public class Group {
         this.name = name;
     }
 
- /*
+
     @OneToMany(
             targetEntity = Product.class,
             mappedBy = "group",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY
     )
     private List<Product> products;
@@ -51,6 +52,6 @@ public class Group {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
-    */
+
 
 }

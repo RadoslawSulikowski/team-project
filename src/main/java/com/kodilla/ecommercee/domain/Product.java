@@ -12,7 +12,7 @@ public class Product {
     private String name;
     private String description;
     private BigDecimal price;
-    private Long groupId;
+    //private Long groupId;
 
     public Product(String name, String description, BigDecimal price) {
         this.name = name;
@@ -28,7 +28,7 @@ public class Product {
         return id;
     }
 
-   /* @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
 
@@ -39,16 +39,16 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart;
-    */
 
-    /*
+
+
     public Group getGroup() {
         return group;
-     }
+    }
 
     public Order getOrder() {
         return order;
-      }
+    }
 
     public Cart getCart() {
       return cart;
@@ -56,16 +56,16 @@ public class Product {
 
     public void setGroup(Group group) {
         this.group = group;
-      }
+    }
 
     public void setOrder(Order order) {
         this.order = order;
-      }
+    }
 
     public void setCart(Cart cart) {
         this.cart = cart;
-      }
-     */
+    }
+
 
 
     public String getName() {
@@ -80,9 +80,9 @@ public class Product {
         return price;
     }
 
-    public Long getGroupId() {
+    /*public Long getGroupId() {
         return groupId;
-    }
+    }*/
 
     public void setId(Long id) {
         this.id = id;
@@ -100,7 +100,7 @@ public class Product {
         this.price = price;
     }
 
-    public void setGroupId(Long groupId) {
+    /*public void setGroupId(Long groupId) {
         this.groupId = groupId;
-    }
+    }*/
 }

@@ -5,9 +5,9 @@ import java.util.List;
 
 public class OrderDto {
     private Long id;
-    private List<String> products = new ArrayList<>();//Before final implementation change to List<ProductDto>
+    private List<ProductDto> products = new ArrayList<>();//Before final implementation change to List<ProductDto>
 
-    public OrderDto(Long id, List<String> products) {//Before final implementation change to List<ProductDto>
+    public OrderDto(Long id, List<ProductDto> products) {//Before final implementation change to List<ProductDto>
         this.id = id;
         this.products = products;
     }
@@ -19,7 +19,7 @@ public class OrderDto {
         return id;
     }
 
-    public List<String> getProducts() {
+    public List<ProductDto> getProducts() {
         return products;
     }
 }
