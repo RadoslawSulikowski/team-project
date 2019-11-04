@@ -81,4 +81,20 @@ public class OrderTestSuite {
         //CleanUp
         orderRepository.deleteAll();
     }
+
+    @Test
+    public void testUserRelation() {
+        //Given
+        User user = new User();
+        Order order = new Order();
+        order.setUser(user);
+        user.getOrders().add(order);
+
+        //When
+        Integer userId = order.getUser().getId();
+
+        //Then
+        Assert.assertEquals(user.getId(), userId);
+        Assert.assertEquals(1, user.getOrders().size());
+    }
 }
