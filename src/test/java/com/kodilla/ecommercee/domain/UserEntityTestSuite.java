@@ -1,38 +1,76 @@
 package com.kodilla.ecommercee.domain;
 
 import com.kodilla.ecommercee.repository.CartRepository;
+import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.UserRepository;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Optional;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class UserEntityTestSuite {
+    private static final String TEST_USERNAME = "Test Username";
+    private static final String TEST_USER_STATUS = "Test User status";
+    private static final Long TEST_USER_KEY = 321L;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private CartRepository cartRepository;
 
     @Test
-    public void testSaveUser() {
+    public void testUserAllSettersAndGetters() {
         //Given
-        User user = new User("name", "status", 1L);
+        User user = new User();
+        Cart testCart = new Cart();
+        List<Order> testOrders = new ArrayList<>();
 
         //When
-        Assert.assertNull(user.getId());
+        user.setId(121L);
+        user.setUsername(TEST_USERNAME);
+        user.setStatus(TEST_USER_STATUS);
+        user.setUserKey(TEST_USER_KEY);
+        user.setCart(testCart);
+        user.setOrders(testOrders);
+
+        Long resultId = user.getId();
+        String resultUsername = user.getUsername();
+        String resultStatus = user.getStatus();
+        Long resultKey = user.getUserKey();
+        Cart resultCart = user.getCart();
+        List<Order> resultOrders = user.getOrders();
+
+        //Then
+        assertEquals((Long) 121L, resultId);
+        assertEquals(TEST_USERNAME, resultUsername);
+        assertEquals(TEST_USER_STATUS, resultStatus);
+        assertEquals(TEST_USER_KEY, resultKey);
+        assertEquals(testCart, resultCart);
+        assertEquals(testOrders, resultOrders);
+    }
+
+    @Test
+    public void testSaveUser() {
+        //Given
+        User user = new User(TEST_USERNAME, TEST_USER_STATUS, TEST_USER_KEY);
+
+        //When
+        assertNull(user.getId());
         userRepository.save(user);
-        Assert.assertNotNull(user.getId());
+        assertNotNull(user.getId());
         long userId = user.getId();
 
         //Then
-        Assert.assertTrue(userRepository.existsById(userId));
+        assertTrue(userRepository.existsById(userId));
 
         //Clean up DB
         userRepository.deleteById(userId);
@@ -41,91 +79,69 @@ public class UserEntityTestSuite {
     @Test
     public void testDeleteUser() {
         //Given
-        User user = new User("name", "status", 1L);
-
-        //When
+        User user = new User(TEST_USERNAME, TEST_USER_STATUS, TEST_USER_KEY);
         userRepository.save(user);
         long userId = user.getId();
+
+        //When
         userRepository.deleteById(userId);
 
         //Then
-        Assert.assertFalse(userRepository.existsById(userId));
+        assertFalse(userRepository.existsById(userId));
 
         //Clean up DB
-    }
-
-    @Test
-    public void testUserGetUsername() {
-        //Given
-        User user = new User("name", "status", 1L);
-
-        //When
-        userRepository.save(user);
-        long userId = user.getId();
-        Optional<User> optionalUser = userRepository.findById(userId);
-        User resultUser = optionalUser.get();
-        String userName = resultUser.getUsername();
-
-        //Then
-        Assert.assertEquals("name", userName);
-
-        //Clean up DB
-        userRepository.deleteById(userId);
-    }
-
-    @Test
-    public void testUserGetStatus() {
-        //Given
-        User user = new User("name", "status", 1L);
-
-        //When
-        userRepository.save(user);
-        long userId = user.getId();
-        Optional<User> optionalUser = userRepository.findById(userId);
-        User resultUser = optionalUser.get();
-        String userStatus = resultUser.getStatus();
-
-        //Then
-        Assert.assertEquals("status", userStatus);
-
-        //Clean up DB
-        userRepository.deleteById(userId);
-    }
-
-    @Test
-    public void testUserGetKey() {
-        //Given
-        User user = new User("name", "status", 1L);
-
-        //When
-        userRepository.save(user);
-        long userId = user.getId();
-        Optional<User> optionalUser = userRepository.findById(userId);
-        User resultUser = optionalUser.get();
-        Long userKey = resultUser.getUserKey();
-
-        //Then
-        Assert.assertEquals((Long) 1L, userKey);
-
-        //Clean up DB
-        userRepository.deleteById(userId);
     }
 
     @Test
     public void testCartCreationWithUser() {
         //Given
-        User user = new User("name", "status", 1L);
+        User user = new User(TEST_USERNAME, TEST_USER_STATUS, TEST_USER_KEY);
+        userRepository.save(user);
+        long userId = user.getId();
 
         //When
+        Cart cart = user.getCart();
+        long cartId = cart.getCartId();
 
+        //Then
+        assertTrue(cartRepository.existsById(cartId));
+
+        //Clean up DB
+        userRepository.deleteById(userId);
+    }
+
+    @Test
+    public void testCartDeletionWithUserDeletion() {
+        //Given
+        User user = new User(TEST_USERNAME, TEST_USER_STATUS, TEST_USER_KEY);
         userRepository.save(user);
         Cart cart = user.getCart();
         long userId = user.getId();
         long cartId = cart.getCartId();
 
+        //When
+        userRepository.deleteById(userId);
+
         //Then
-        System.out.println(cartRepository.count());
-        Assert.assertNotEquals(0, cartId);
+        assertFalse(cartRepository.existsById(cartId));
+
+        //Clean up DB
+    }
+
+    @Test
+    public void testUserRemainsAfterCartDeletion() {
+        //Given
+        User user = new User("name", "status", 1L);
+        userRepository.save(user);
+        Cart cart = user.getCart();
+        long userId = user.getId();
+        long cartId = cart.getCartId();
+
+        //When
+        cartRepository.deleteById(cartId);
+
+        //Then
+        assertTrue(userRepository.existsById(userId));
 
         //Clean up DB
         userRepository.deleteById(userId);
