@@ -8,7 +8,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     @Column(unique = true)
     private String username;
     private String status;
@@ -20,7 +20,7 @@ public class User {
     )
     private List<Order> orders = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Cart cart;
+    private Cart cart = new Cart();
 
 
     public User(String username, String status, Long userKey) {
@@ -33,7 +33,7 @@ public class User {
     }
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -53,8 +53,12 @@ public class User {
         return orders;
     }
 
+    public Cart getCart(){
+        return cart;
+    }
 
-    public void setId(Integer id) {
+
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -72,5 +76,9 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public void setCart(Cart cart){
+        this.cart = cart;
     }
 }
