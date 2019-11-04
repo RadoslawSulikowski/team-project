@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +31,13 @@ public class OrderTestSuite {
 
         //When
         orderRepository.save(order);
+        Optional<Order> testOrder = orderRepository.findById(order.getOrderId());
 
         //Then
-        Assert.assertEquals(1, orderRepository.count());
+        Assert.assertTrue(testOrder.isPresent());
 
         //CleanUp
-        orderRepository.deleteAll();
+        orderRepository.deleteById(order.getOrderId());
     }
 
     @Test
@@ -51,7 +53,7 @@ public class OrderTestSuite {
         Assert.assertTrue(testOrder.isPresent());
 
         //CleanUp
-        orderRepository.deleteAll();
+        orderRepository.deleteById(order.getOrderId());
     }
 
     @Test
@@ -69,7 +71,8 @@ public class OrderTestSuite {
         Assert.assertEquals(2, orders.size());
 
         //CleanUp
-        orderRepository.deleteAll();
+        orderRepository.deleteById(order1.getOrderId());
+        orderRepository.deleteById(order2.getOrderId());
     }
 
     @Test
@@ -82,10 +85,7 @@ public class OrderTestSuite {
         orderRepository.deleteById(order.getOrderId());
 
         //Then
-        Assert.assertEquals(0, orderRepository.count());
-
-        //CleanUp
-        orderRepository.deleteAll();
+        Assert.assertFalse(orderRepository.findById(order.getOrderId()).isPresent());
     }
 
     @Test
@@ -108,8 +108,7 @@ public class OrderTestSuite {
         Assert.assertEquals(1, testUser.get().getOrders().size());
 
         //CleanUp
-        userRepository.deleteAll();
-        orderRepository.deleteAll();
+        userRepository.deleteById(user.getId());
     }
 
     @Test
@@ -129,6 +128,7 @@ public class OrderTestSuite {
         //When
         Optional<Order> testOrder = orderRepository.findById(order.getOrderId());
         Optional<Product> testProduct = productRepository.findById(product1.getId());
+
         List<Product> products = testOrder.get().getProducts();
         Long orderId = testProduct.get().getOrder().getOrderId();
 
@@ -137,7 +137,8 @@ public class OrderTestSuite {
         Assert.assertEquals(order.getOrderId(), orderId);
 
         //CleanUp
-        productRepository.deleteAll();
-        orderRepository.deleteAll();
+        productRepository.deleteById(product1.getId());
+        productRepository.deleteById(product2.getId());
+        orderRepository.deleteById(order.getOrderId());
     }
 }
