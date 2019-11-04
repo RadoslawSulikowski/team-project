@@ -54,8 +54,8 @@ public class GroupRepositoryTestSuite {
 
         //Then
         int sizeOfResultListBeforeDeleting = groupRepository.findAll().size();              // Checking the initial size of the list and printing it on the screen
-        groupRepository.deleteById(group1.getId());                                         // Deleting an instance and then checking the size again
-        int sizeOfResultListAfterDeleting = groupRepository.findAll().size();
+        groupRepository.deleteById(group1.getId());                                         // Deleting an instance and then
+        int sizeOfResultListAfterDeleting = groupRepository.findAll().size();               // checking the size again
 
         Optional<Group> readGroup1 = groupRepository.findById(group1.getId());              // Checking if the deleted instance has in fact been deleted
         Optional<Product> readProduct1 = productRepository.findById(product1.getId());      // After deleting the group, checking if products have been deleted as well
