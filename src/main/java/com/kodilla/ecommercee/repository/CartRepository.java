@@ -8,21 +8,22 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 @Transactional
+@Repository
 public interface CartRepository extends CrudRepository<Cart, Long> {
     @Override
     List<Cart> findAll();
 
     @Override
-    Optional<Cart> findById(Long id);
+    Optional<Cart> findById(Long cartId);
 
     @Override
     Cart save(Cart cart);
 
     @Override
-    void deleteById(Long id);
+    void deleteById(Long cartId);
 
     @Override
     long count();
+
 }

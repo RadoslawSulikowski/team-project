@@ -1,7 +1,7 @@
-package com.kodilla.ecommercee.repository;
+package com.kodilla.ecommercee.domain;
 
-import com.kodilla.ecommercee.domain.Cart;
-import com.kodilla.ecommercee.domain.Product;
+import com.kodilla.ecommercee.repository.CartRepository;
+import com.kodilla.ecommercee.repository.ProductRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
