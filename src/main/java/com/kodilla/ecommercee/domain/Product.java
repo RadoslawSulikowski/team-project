@@ -52,14 +52,7 @@ public class Product {
 
     public Group getGroup() {
         return group;
-    }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public Cart getCart() {
-        return cart;
     }
 
 
