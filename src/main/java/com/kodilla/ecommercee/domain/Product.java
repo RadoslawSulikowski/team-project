@@ -5,15 +5,12 @@ import java.math.BigDecimal;
 
 @Entity(name = "PRODUCTS")
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String description;
     private BigDecimal price;
-    private Long groupId;
-
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
@@ -32,9 +29,7 @@ public class Product {
     }
 
     public Product() {
-
     }
-
 
     public Long getId() {
         return id;
@@ -54,14 +49,15 @@ public class Product {
 
     public Group getGroup() {
         return group;
-     }
+    }
 
     public Order getOrder() {
         return order;
-      }
+    }
+
 
     public Cart getCart() {
-      return cart;
+        return cart;
     }
 
 
