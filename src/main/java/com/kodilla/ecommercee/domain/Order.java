@@ -38,7 +38,6 @@ public class Order {
         return products;
     }
 
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -49,5 +48,13 @@ public class Order {
 
     public void setProduct(List<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return orderId.equals(order.orderId);
     }
 }
