@@ -1,8 +1,8 @@
-package com.kodilla.ecommercee.repository;
+package com.kodilla.ecommercee.domain;
 
-import com.kodilla.ecommercee.domain.Cart;
-import com.kodilla.ecommercee.domain.Product;
-
+import com.kodilla.ecommercee.repository.CartRepository;
+import com.kodilla.ecommercee.repository.ProductRepository;
+import com.kodilla.ecommercee.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.math.BigDecimal;
 import java.util.*;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CartTestSuite {
@@ -21,6 +24,7 @@ public class CartTestSuite {
     private CartRepository cartRepository;
     @Autowired
     private ProductRepository productRepository;
+
 
     @Test
     public void testSaveCart() {
@@ -53,18 +57,40 @@ public class CartTestSuite {
     }
 
     @Test
-    public void testFindProductById() {
+    public void testDeleteProductFromCart() {
         //Given
+        Cart cart = new Cart();
+        cartRepository.save(cart);
         Product product = new Product();
         productRepository.save(product);
+        long productId = product.getId();
+        long cartId = cart.getCartId();
 
         //When
-        Optional<Product> testProduct = productRepository.findById(product.getId());
+        productRepository.deleteById(productId);
 
         //Then
-        Assert.assertTrue(testProduct.isPresent());
+       Assert.assertTrue(cartRepository.existsById(cartId));
+
+    }
+
+    @Test
+    public void testProductIntoCart() {
+        //Given
+        Cart cart = new Cart();
+        cartRepository.save(cart);
+        long cartId = cart.getCartId();
+
+        //When
+        Product product = new Product();
+        productRepository.save(product);
+        long productId = product.getId();
+
+        //Then
+        assertTrue(productRepository.existsById(productId));
 
         //CleanUp
-        productRepository.deleteById(product.getId());
+        cartRepository.deleteById(cartId);
+
     }
 }
