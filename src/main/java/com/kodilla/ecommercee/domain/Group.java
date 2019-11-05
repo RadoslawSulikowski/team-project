@@ -54,5 +54,10 @@ public class Group {
         this.products = products;
     }
 
-
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                '}';
+    }
 }

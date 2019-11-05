@@ -1,6 +1,7 @@
 package com.kodilla.ecommercee.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity(name = "PRODUCTS")
@@ -8,9 +9,14 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
+    @Column(name = "ID", unique = true)
     private Long id;
+    @NotNull
     private String name;
+    @NotNull
     private String description;
+    @NotNull
     private BigDecimal price;
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -33,7 +39,6 @@ public class Product {
 
     }
 
-
     public Long getId() {
         return id;
     }
@@ -52,14 +57,14 @@ public class Product {
 
     public Group getGroup() {
         return group;
-     }
+    }
 
     public Order getOrder() {
         return order;
-      }
+    }
 
     public Cart getCart() {
-      return cart;
+        return cart;
     }
 
 
@@ -89,5 +94,15 @@ public class Product {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", group=" + group +
+                '}';
     }
 }
