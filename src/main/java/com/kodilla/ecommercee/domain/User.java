@@ -21,7 +21,7 @@ public class User {
     )
     private List<Order> orders = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Cart cart;
+    private Cart cart = new Cart();
 
     public User(String username, String status, Long userKey) {
         this.username = username;
@@ -53,6 +53,10 @@ public class User {
         return orders;
     }
 
+    public Cart getCart(){
+        return cart;
+    }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -72,5 +76,9 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public void setCart(Cart cart){
+        this.cart = cart;
     }
 }
