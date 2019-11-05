@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertFalse;
@@ -69,7 +71,7 @@ public class ProductEntityTestSuite {
 
         Group group = groupRepository.save(new Group("ubrania"));
 
-        //When;
+        //When
         product.setGroup(group);
         product1.setGroup(group);
         product2.setGroup(group);
@@ -86,11 +88,30 @@ public class ProductEntityTestSuite {
         assertTrue(foundProduct.isPresent());
         assertTrue(foundProduct1.isPresent());
         assertTrue(foundProduct2.isPresent());
+        assertTrue(groupRepository.existsById(group.getId()));
 
         //CleanUp
         productRepository.deleteById(id);
         productRepository.deleteById(id1);
         productRepository.deleteById(id2);
+        groupRepository.deleteById(group.getId());
+    }
+
+    @Test
+    public void testDeletingProductDoesntDeleteTheGroup() {
+        //Given
+        Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
+        Group group = groupRepository.save(new Group("ubrania"));
+
+        //When
+        product.setGroup(group);
+
+        //Then
+        productRepository.deleteById(product.getId());
+
+        assertTrue(groupRepository.existsById(group.getId()));
+
+        //CleanUp
         groupRepository.deleteById(group.getId());
     }
 
@@ -105,26 +126,26 @@ public class ProductEntityTestSuite {
         Cart cart = cartRepository.save(new Cart());
         Order order = orderRepository.save(new Order());
 
-        //When;
+        //When
         product.setGroup(group);
         product1.setGroup(group);
         product2.setGroup(group);
 
-        product.setCart(cart);
-        product.setOrder(order);
+        List<Product> productList = new ArrayList<>();
+        productList.add(product);
+        productList.add(product1);
+        productList.add(product2);
+
+        cart.setProducts(productList);
+        order.setProducts(productList);
 
         //Then
         Long id = product.getId();
         Long id1 = product1.getId();
         Long id2 = product2.getId();
 
-        Optional<Product> foundProduct = productRepository.findById(id);
-        Optional<Product> foundProduct1 = productRepository.findById(id1);
-        Optional<Product> foundProduct2 = productRepository.findById(id2);
-
-        assertTrue(foundProduct.isPresent());
-        assertTrue(foundProduct1.isPresent());
-        assertTrue(foundProduct2.isPresent());
+        assertTrue(cartRepository.findById(cart.getCartId()).isPresent());
+        assertTrue(orderRepository.findById(order.getOrderId()).isPresent());
 
         //CleanUp
         productRepository.deleteById(id);
@@ -134,4 +155,48 @@ public class ProductEntityTestSuite {
         cartRepository.deleteById(cart.getCartId());
         orderRepository.deleteById(order.getOrderId());
     }
+    @Test
+    public void testDeletingProductDoesntDeleteTheCart() {
+        //Given
+        Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
+        Group group = groupRepository.save(new Group("ubrania"));
+        Cart cart = cartRepository.save(new Cart());
+
+        //When
+        product.setGroup(group);
+        List<Product> productList = new ArrayList<>();
+        productList.add(product);
+        cart.setProducts(productList);
+
+        //Then
+        productRepository.deleteById(product.getId());
+
+        assertTrue(cartRepository.existsById(cart.getCartId()));
+
+        //CleanUp
+        groupRepository.deleteById(group.getId());
+        cartRepository.deleteById(cart.getCartId());
+    }
+    @Test
+    public void testDeletingProductDoesntDeleteTheOrder() {
+        //Given
+        Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
+        Group group = groupRepository.save(new Group("ubrania"));
+        Order order = orderRepository.save(new Order());
+
+        //When
+        product.setGroup(group);
+        List<Product> productList = new ArrayList<>();
+        productList.add(product);
+        order.setProducts(productList);
+        //Then
+        productRepository.deleteById(product.getId());
+
+        assertTrue(orderRepository.existsById(order.getOrderId()));
+
+        //CleanUp
+        groupRepository.deleteById(group.getId());
+        orderRepository.deleteById(order.getOrderId());
+    }
+
 }
