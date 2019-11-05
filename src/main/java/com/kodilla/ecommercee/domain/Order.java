@@ -17,7 +17,7 @@ public class Order {
             targetEntity = Product.class,
             mappedBy = "order",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     private List<Product> products = new ArrayList<>();
 
