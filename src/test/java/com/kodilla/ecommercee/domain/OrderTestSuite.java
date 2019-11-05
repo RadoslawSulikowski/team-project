@@ -3,6 +3,7 @@ package com.kodilla.ecommercee.domain;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
 import com.kodilla.ecommercee.repository.UserRepository;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,7 +68,8 @@ public class OrderTestSuite {
         List<Order> orders = orderRepository.findAll();
 
         //Then
-        Assert.assertFalse(orders.isEmpty());
+        Assert.assertTrue(orders.stream().map(Order::getOrderId).anyMatch(n -> n.equals(order1.getOrderId())));
+        Assert.assertTrue(orders.stream().map(Order::getOrderId).anyMatch(n -> n.equals(order2.getOrderId())));
 
         //CleanUp
         orderRepository.deleteById(order1.getOrderId());
