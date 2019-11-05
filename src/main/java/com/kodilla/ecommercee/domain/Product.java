@@ -40,8 +40,6 @@ public class Product {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-
-
     public Group getGroup() {
         return group;
     }
@@ -67,7 +65,6 @@ public class Product {
     }
 
 
-
     public String getName() {
         return name;
     }
@@ -79,10 +76,6 @@ public class Product {
     public BigDecimal getPrice() {
         return price;
     }
-
-    /*public Long getGroupId() {
-        return groupId;
-    }*/
 
     public void setId(Long id) {
         this.id = id;

@@ -22,7 +22,7 @@ public class GroupRepositoryTestSuite {
     private ProductRepository productRepository;
 
     @Test
-    public void testSaveAndDeleteMethods() {
+    public void testSaveGroup() {
         //Given
         Group group1 = new Group("Ubrania");
         Group group2 = new Group("Zdrowie");
@@ -46,7 +46,6 @@ public class GroupRepositoryTestSuite {
         group1.setProducts(listOfProducts);
 
         //When
-        int sizeOfRepository = groupRepository.findAll().size();                            // Checking the initial size of the repository
         groupRepository.save(group1);
         groupRepository.save(group2);
         groupRepository.save(group3);
@@ -54,15 +53,15 @@ public class GroupRepositoryTestSuite {
         groupRepository.save(group5);
 
         //Then
-        int sizeOfResultListBeforeDeleting = groupRepository.findAll().size();              // Checking the size of the rep. after saving few objects into it
+        int sizeOfResultListBeforeDeleting = groupRepository.findAll().size();              // Checking the initial size of the list and printing it on the screen
         groupRepository.deleteById(group1.getId());                                         // Deleting an instance and then checking the size again
         int sizeOfResultListAfterDeleting = groupRepository.findAll().size();
 
         Optional<Group> readGroup1 = groupRepository.findById(group1.getId());              // Checking if the deleted instance has in fact been deleted
         Optional<Product> readProduct1 = productRepository.findById(product1.getId());      // After deleting the group, checking if products have been deleted as well
 
-        Assert.assertEquals(5, sizeOfResultListBeforeDeleting - sizeOfRepository);
-        Assert.assertEquals(4, sizeOfResultListAfterDeleting - sizeOfRepository);
+        Assert.assertEquals(sizeOfResultListBeforeDeleting, 5);
+        Assert.assertEquals(sizeOfResultListAfterDeleting, 4);
         Assert.assertFalse(readGroup1.isPresent());
         Assert.assertTrue(readProduct1.isPresent());
 
