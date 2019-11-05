@@ -12,7 +12,16 @@ public class Product {
     private String name;
     private String description;
     private BigDecimal price;
-    //private Long groupId;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
 
     public Product(String name, String description, BigDecimal price) {
         this.name = name;
@@ -24,46 +33,10 @@ public class Product {
 
     }
 
+
     public Long getId() {
         return id;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    private Group group;
-
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public Cart getCart() {
-      return cart;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
 
     public String getName() {
         return name;
@@ -76,6 +49,19 @@ public class Product {
     public BigDecimal getPrice() {
         return price;
     }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -93,7 +79,15 @@ public class Product {
         this.price = price;
     }
 
-    /*public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }*/
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 }

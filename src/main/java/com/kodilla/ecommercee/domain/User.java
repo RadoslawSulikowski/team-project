@@ -22,6 +22,7 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cart cart;
 
+
     public User(String username, String status, Long userKey) {
         this.username = username;
         this.status = status;
@@ -30,6 +31,7 @@ public class User {
 
     public User() {
     }
+
 
     public Integer getId() {
         return id;
@@ -47,10 +49,10 @@ public class User {
         return userKey;
     }
 
-
     public List<Order> getOrders() {
         return orders;
     }
+
 
     public void setId(Integer id) {
         this.id = id;
