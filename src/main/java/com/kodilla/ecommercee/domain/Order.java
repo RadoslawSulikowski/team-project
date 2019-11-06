@@ -34,7 +34,7 @@ public class Order {
         return user;
     }
 
-    public List<Product> getProduct() {
+    public List<Product> getProducts() {
         return products;
     }
 
@@ -47,7 +47,7 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public void setProduct(List<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 }
