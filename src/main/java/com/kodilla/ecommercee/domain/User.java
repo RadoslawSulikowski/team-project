@@ -9,10 +9,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(unique = true)
     private String username;
+
     private String status;
     private Long userKey;
+
     @OneToMany(
             targetEntity = Order.class,
             mappedBy = "user",
@@ -20,6 +23,7 @@ public class User {
             fetch = FetchType.LAZY
     )
     private List<Order> orders = new ArrayList<>();
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cart cart = new Cart();
 

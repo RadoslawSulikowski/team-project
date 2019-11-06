@@ -35,15 +35,6 @@ public class CartService {
         return cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
     }
 
-    public Iterable<Cart> getCarts() {
-        try {
-            return cartRepository.findAll();
-        } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-            return new ArrayList<>();
-        }
-    }
-
     public Cart save(Cart cart) {
         return cartRepository.save(cart);
     }
@@ -67,7 +58,8 @@ public class CartService {
                 Product product = productRepository.findById(productId).get();
                 if (cart.getProducts().contains(product)) {
                     cart.getProducts().remove(product);
-                    productRepository.deleteById(productId);
+                } else {
+                    System.out.println("Cart ID: " + cart.getCartId() + " does not contain product ID: " + product.getId());
                 }
             } else {
                 throw new ProductNotFoundException();
@@ -90,7 +82,7 @@ public class CartService {
             Order order = new Order();
             order.setUser(cartRepository.findById(cartId).get().getUser());
             order.setProducts(cartRepository.findById(cartId).get().getProducts());
-            deleteCart(cartId);
+            cartRepository.findById(cartId).get().setProducts(new ArrayList<>());
             return orderRepository.save(order);
         } else {
             throw new CartNotFoundException();

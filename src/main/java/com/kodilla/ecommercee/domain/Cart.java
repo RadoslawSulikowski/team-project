@@ -11,12 +11,14 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cartId;
+
     @OneToMany(
             targetEntity = Product.class,
             mappedBy = "cart",
             cascade = ALL,
             fetch = FetchType.LAZY)
     private List<Product> products = new ArrayList<>();
+
     @OneToOne(cascade = {PERSIST, REFRESH, MERGE}, fetch = FetchType.EAGER)
     private User user;
 
