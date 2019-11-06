@@ -15,7 +15,7 @@ public class Group {
     @OneToMany(
             targetEntity = Product.class,
             mappedBy = "group",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY
     )
     private List<Product> products = new ArrayList<>();
@@ -53,6 +53,4 @@ public class Group {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
-
-
 }
