@@ -38,7 +38,6 @@ public class Order {
         return products;
     }
 
-
     public void setUser(User user) {
         this.user = user;
     }
