@@ -20,14 +20,12 @@ public class Group {
     )
     private List<Product> products = new ArrayList<>();
 
-
     public Group(String name) {
         this.name = name;
     }
 
     public Group() {
     }
-
 
     public Long getId() {
         return id;
@@ -41,7 +39,6 @@ public class Group {
         return products;
     }
 
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -52,12 +49,5 @@ public class Group {
 
     public void setProducts(List<Product> products) {
         this.products = products;
-    }
-
-    @Override
-    public String toString() {
-        return "Group{" +
-                "id=" + id +
-                '}';
     }
 }
