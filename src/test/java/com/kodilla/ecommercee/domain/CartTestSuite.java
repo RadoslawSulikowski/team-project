@@ -2,7 +2,6 @@ package com.kodilla.ecommercee.domain;
 
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
-import com.kodilla.ecommercee.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,9 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.*;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,6 +48,8 @@ public class CartTestSuite {
         Assert.assertTrue(testProduct.isPresent());
 
         //CleanUp
+        cartRepository.deleteById(cart1.getCartId());
+        cartRepository.deleteById(cart2.getCartId());
         productRepository.deleteById(product2.getId());
 
     }
@@ -61,16 +59,17 @@ public class CartTestSuite {
         //Given
         Cart cart = new Cart();
         cartRepository.save(cart);
-        Product product = new Product();
-        productRepository.save(product);
-        long productId = product.getId();
-        long cartId = cart.getCartId();
 
         //When
-        productRepository.deleteById(productId);
+        Product product = new Product();
+        productRepository.save(product);
 
         //Then
-       Assert.assertTrue(cartRepository.existsById(cartId));
+        productRepository.deleteById(product.getId());
+        Assert.assertTrue(cartRepository.existsById(cart.getCartId()));
+
+        //CleanUp
+        cartRepository.deleteById(cart.getCartId());
 
     }
 
@@ -79,18 +78,16 @@ public class CartTestSuite {
         //Given
         Cart cart = new Cart();
         cartRepository.save(cart);
-        long cartId = cart.getCartId();
 
         //When
         Product product = new Product();
         productRepository.save(product);
-        long productId = product.getId();
 
         //Then
-        assertTrue(productRepository.existsById(productId));
+        Assert.assertTrue(cartRepository.existsById(cart.getCartId()));
 
         //CleanUp
-        cartRepository.deleteById(cartId);
+        cartRepository.deleteById(cart.getCartId());
 
     }
 }
