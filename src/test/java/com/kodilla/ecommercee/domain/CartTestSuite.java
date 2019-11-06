@@ -58,15 +58,18 @@ public class CartTestSuite {
     public void testDeleteProductFromCart() {
         //Given
         Cart cart = new Cart();
-        cartRepository.save(cart);
+        Product product = new Product();
+        List<Product> productsList = cart.getProducts();
+        productsList.add(product);
+
+        cart.setProducts(productsList);
 
         //When
-        Product product = new Product();
-        productRepository.save(product);
+        cartRepository.save(cart);
 
         //Then
         productRepository.deleteById(product.getId());
-        Assert.assertTrue(cartRepository.existsById(cart.getCartId()));
+        Assert.assertFalse(productRepository.existsById(product.getId()));
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
@@ -77,14 +80,17 @@ public class CartTestSuite {
     public void testProductIntoCart() {
         //Given
         Cart cart = new Cart();
-        cartRepository.save(cart);
+        Product product = new Product();
+        List<Product> productsList = cart.getProducts();
+        productsList.add(product);
+
+        cart.setProducts(productsList);
 
         //When
-        Product product = new Product();
-        productRepository.save(product);
+        cartRepository.save(cart);
 
         //Then
-        Assert.assertTrue(cartRepository.existsById(cart.getCartId()));
+        Assert.assertTrue(productRepository.existsById(product.getId()));
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
