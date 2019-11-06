@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,20 +37,22 @@ public class ProductEntityTestSuite {
     private static final BigDecimal PRICE = new BigDecimal(500);
 
     @Test
-    public void testProductSave() {
+    public void givenProductRepository_testSaveAndFindByIdMethods() {
         //Given
         Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
 
         //When & Then
         Optional<Product> foundProduct = productRepository.findById(product.getId());
+
         assertTrue(foundProduct.isPresent());
+        assertEquals(product.getId(), foundProduct.get().getId());
 
         //CleanUp
         productRepository.deleteById(product.getId());
     }
 
     @Test
-    public void testProductDelete() {
+    public void givenProductRepository_TestDeleteMethod() {
         //Given
         Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
 
@@ -60,143 +61,135 @@ public class ProductEntityTestSuite {
 
         //Then
         assertFalse(productRepository.findById(product.getId()).isPresent());
+
+        //CleanUp
     }
 
     @Test
-    public void testProductRelationshipWithGroup() {
+    public void shouldSaveGroupAfterProductDeletion() {
         //Given
-        Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
-        Product product1 = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
-        Product product2 = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
+        Group group =new Group("ubrania");
+        Order order = new Order();
+        Cart cart = new Cart();
+        Product product = new Product(NAME, DESCRIPTION, PRICE);
+        Product product1 = new Product(NAME, DESCRIPTION, PRICE);
 
-        Group group = groupRepository.save(new Group("ubrania"));
+        cart.getProducts().add(product);
+        cart.getProducts().add(product1);
+        order.getProducts().add(product);
+        order.getProducts().add(product1);
+        group.getProducts().add(product);
+        group.getProducts().add(product1);
 
-        //When
         product.setGroup(group);
         product1.setGroup(group);
-        product2.setGroup(group);
-
-        //Then
-        Long id = product.getId();
-        Long id1 = product1.getId();
-        Long id2 = product2.getId();
-
-        Optional<Product> foundProduct = productRepository.findById(id);
-        Optional<Product> foundProduct1 = productRepository.findById(id1);
-        Optional<Product> foundProduct2 = productRepository.findById(id2);
-
-        assertTrue(foundProduct.isPresent());
-        assertTrue(foundProduct1.isPresent());
-        assertTrue(foundProduct2.isPresent());
-        assertTrue(groupRepository.existsById(group.getId()));
-
-        //CleanUp
-        productRepository.deleteById(id);
-        productRepository.deleteById(id1);
-        productRepository.deleteById(id2);
-        groupRepository.deleteById(group.getId());
-    }
-
-    @Test
-    public void testDeletingProductDoesntDeleteTheGroup() {
-        //Given
-        Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
-        Group group = groupRepository.save(new Group("ubrania"));
+        product.setOrder(order);
+        product1.setOrder(order);
+        product.setCart(cart);
+        product1.setCart(cart);
 
         //When
-        product.setGroup(group);
+        productRepository.save(product);
+        productRepository.save(product1);
+        cartRepository.save(cart);
+        orderRepository.save(order);
+        groupRepository.save(group);
 
         //Then
-        productRepository.deleteById(product.getId());
+        productRepository.delete(product);
+        productRepository.delete(product1);
 
         assertTrue(groupRepository.existsById(group.getId()));
-
-        //CleanUp
-        groupRepository.deleteById(group.getId());
-    }
-
-    @Test
-    public void testProductRelationshipWithCartAndOrder() {
-        //Given
-        Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
-        Product product1 = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
-        Product product2 = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
-
-        Group group = groupRepository.save(new Group("ubrania"));
-        Cart cart = cartRepository.save(new Cart());
-        Order order = orderRepository.save(new Order());
-
-        //When
-        product.setGroup(group);
-        product1.setGroup(group);
-        product2.setGroup(group);
-
-        List<Product> productList = new ArrayList<>();
-        productList.add(product);
-        productList.add(product1);
-        productList.add(product2);
-
-        cart.setProducts(productList);
-        order.setProducts(productList);
-
-        //Then
-        Long id = product.getId();
-        Long id1 = product1.getId();
-        Long id2 = product2.getId();
-
-        assertTrue(cartRepository.findById(cart.getCartId()).isPresent());
-        assertTrue(orderRepository.findById(order.getOrderId()).isPresent());
-
-        //CleanUp
-        productRepository.deleteById(id);
-        productRepository.deleteById(id1);
-        productRepository.deleteById(id2);
-        groupRepository.deleteById(group.getId());
-        cartRepository.deleteById(cart.getCartId());
-        orderRepository.deleteById(order.getOrderId());
-    }
-    @Test
-    public void testDeletingProductDoesntDeleteTheCart() {
-        //Given
-        Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
-        Group group = groupRepository.save(new Group("ubrania"));
-        Cart cart = cartRepository.save(new Cart());
-
-        //When
-        product.setGroup(group);
-        List<Product> productList = new ArrayList<>();
-        productList.add(product);
-        cart.setProducts(productList);
-
-        //Then
-        productRepository.deleteById(product.getId());
-
+        assertTrue(orderRepository.existsById(order.getOrderId()));
         assertTrue(cartRepository.existsById(cart.getCartId()));
 
         //CleanUp
         groupRepository.deleteById(group.getId());
-        cartRepository.deleteById(cart.getCartId());
     }
+
     @Test
-    public void testDeletingProductDoesntDeleteTheOrder() {
+    public void shouldSaveCartAfterProductDeletion() {
         //Given
-        Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
-        Group group = groupRepository.save(new Group("ubrania"));
-        Order order = orderRepository.save(new Order());
+        Group group =new Group("ubrania");
+        Order order = new Order();
+        Cart cart = new Cart();
+        Product product = new Product(NAME, DESCRIPTION, PRICE);
+        Product product1 = new Product(NAME, DESCRIPTION, PRICE);
+
+        cart.getProducts().add(product);
+        cart.getProducts().add(product1);
+        order.getProducts().add(product);
+        order.getProducts().add(product1);
+        group.getProducts().add(product);
+        group.getProducts().add(product1);
+
+        product.setGroup(group);
+        product1.setGroup(group);
+        product.setOrder(order);
+        product1.setOrder(order);
+        product.setCart(cart);
+        product1.setCart(cart);
 
         //When
-        product.setGroup(group);
-        List<Product> productList = new ArrayList<>();
-        productList.add(product);
-        order.setProducts(productList);
+        productRepository.save(product);
+        productRepository.save(product1);
+        cartRepository.save(cart);
+        orderRepository.save(order);
+        groupRepository.save(group);
+
         //Then
-        productRepository.deleteById(product.getId());
+        productRepository.delete(product);
+        productRepository.delete(product1);
+
+        assertTrue(cartRepository.existsById(cart.getCartId()));
+
+        //CleanUp
+        cartRepository.deleteById(cart.getCartId());
+        orderRepository.deleteById(order.getOrderId());
+        groupRepository.deleteById(group.getId());
+    }
+
+    @Test
+    public void shouldSaveOrderAfterProductDeletion() {
+        //Given
+        Group group =new Group("ubrania");
+        Order order = new Order();
+        Cart cart = new Cart();
+        Product product = new Product(NAME, DESCRIPTION, PRICE);
+        Product product1 = new Product(NAME, DESCRIPTION, PRICE);
+
+        cart.getProducts().add(product);
+        cart.getProducts().add(product1);
+        order.getProducts().add(product);
+        order.getProducts().add(product1);
+        group.getProducts().add(product);
+        group.getProducts().add(product1);
+
+        product.setGroup(group);
+        product1.setGroup(group);
+        product.setOrder(order);
+        product1.setOrder(order);
+        product.setCart(cart);
+        product1.setCart(cart);
+
+        //When
+        productRepository.save(product);
+        productRepository.save(product1);
+        cartRepository.save(cart);
+        orderRepository.save(order);
+        groupRepository.save(group);
+
+        //Then
+        productRepository.delete(product);
+        productRepository.delete(product1);
 
         assertTrue(orderRepository.existsById(order.getOrderId()));
 
         //CleanUp
-        groupRepository.deleteById(group.getId());
+        cartRepository.deleteById(cart.getCartId());
         orderRepository.deleteById(order.getOrderId());
+        groupRepository.deleteById(group.getId());
     }
+
 
 }

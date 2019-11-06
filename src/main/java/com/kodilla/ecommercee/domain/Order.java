@@ -25,7 +25,6 @@ public class Order {
     public Order() {
     }
 
-
     public Long getOrderId() {
         return orderId;
     }
