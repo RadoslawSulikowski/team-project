@@ -100,12 +100,11 @@ public class ProductEntityTestSuite {
         productRepository.delete(product1);
 
         assertTrue(groupRepository.existsById(group.getId()));
-        assertTrue(orderRepository.existsById(order.getOrderId()));
-        assertTrue(cartRepository.existsById(cart.getCartId()));
 
         //CleanUp
-        groupRepository.deleteById(group.getId());
-    }
+        cartRepository.deleteById(cart.getCartId());
+        orderRepository.deleteById(order.getOrderId());
+        groupRepository.deleteById(group.getId());    }
 
     @Test
     public void shouldSaveCartAfterProductDeletion() {
@@ -152,7 +151,7 @@ public class ProductEntityTestSuite {
     @Test
     public void shouldSaveOrderAfterProductDeletion() {
         //Given
-        Group group =new Group("ubrania");
+        Group group = new Group("ubrania");
         Order order = new Order();
         Cart cart = new Cart();
         Product product = new Product(NAME, DESCRIPTION, PRICE);
@@ -190,6 +189,4 @@ public class ProductEntityTestSuite {
         orderRepository.deleteById(order.getOrderId());
         groupRepository.deleteById(group.getId());
     }
-
-
 }
