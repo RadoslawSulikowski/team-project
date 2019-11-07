@@ -149,10 +149,8 @@ public class UserEntityTestSuite {
         userRepository.deleteById(userId);
     }
 
-
-
     @Test
-    public void testAddOrderToRepositoryViaUser(){
+    public void testAddOrderToRepositoryViaUser() {
         //Given
         User user = new User(TEST_USERNAME, TEST_USER_STATUS, TEST_USER_KEY);
         Order order = new Order();
@@ -174,7 +172,7 @@ public class UserEntityTestSuite {
     }
 
     @Test
-    public void testUserRemainsAfterOrderDeletion(){
+    public void testUserRemainsAfterOrderDeletion() {
         //Given
         User user = new User(TEST_USERNAME, TEST_USER_STATUS, TEST_USER_KEY);
         Order order = new Order();
@@ -195,9 +193,8 @@ public class UserEntityTestSuite {
         userRepository.deleteById(userId);
     }
 
-
     @Test
-    public void testRemoveOrderFromRepositoryViaUser(){
+    public void shouldRemoveOrderFromRepoAfterRemovingFromUserOrders() {
         //Given
         User user = new User(TEST_USERNAME, TEST_USER_STATUS, TEST_USER_KEY);
         Order order = new Order();
@@ -208,22 +205,20 @@ public class UserEntityTestSuite {
         userRepository.save(user);
         long orderId = user.getOrders().get(orderIndex).getOrderId();
 
-        order = orderRepository.findById(orderId).get();
-
         //When;
-        assertEquals(order, user.getOrders().remove(orderIndex));
+        assertTrue(orderRepository.existsById(orderId));
+        user.getOrders().remove(orderRepository.findById(orderId).get());
         userRepository.save(user);
 
         //Then
-        assertEquals(0, userRepository.findById(userId).get().getOrders().size());
         assertFalse(orderRepository.existsById(orderId));
 
         //Clean up DB
         userRepository.deleteById(userId);
-        orderRepository.deleteById(orderId);
     }
+
     @Test
-    public void testRemoveOrderFromUserOrdersAfterOrderDeletionFromRepo(){
+    public void shouldRemoveOrderFromUserOrdersAfterDeletionOrderFromRepo() {
         //Given
         User user = new User(TEST_USERNAME, TEST_USER_STATUS, TEST_USER_KEY);
         Order order = new Order();
@@ -232,8 +227,7 @@ public class UserEntityTestSuite {
         user.getOrders().add(order);
         int orderIndex = user.getOrders().indexOf(order);
         userRepository.save(user);
-        order = user.getOrders().get(orderIndex);
-        long orderId = order.getOrderId();
+        long orderId = user.getOrders().get(orderIndex).getOrderId();
 
         //When
         assertTrue(orderRepository.existsById(orderId));
