@@ -231,7 +231,7 @@ public class UserEntityTestSuite {
 
         //When
         assertTrue(orderRepository.existsById(orderId));
-        orderRepository.deleteById(orderId);
+        orderRepository.delete(orderRepository.findById(orderId).get());
         assertFalse(orderRepository.existsById(orderId));
 
         //Then
