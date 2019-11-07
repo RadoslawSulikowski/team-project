@@ -133,7 +133,7 @@ public class UserEntityTestSuite {
     @Test
     public void testUserRemainsAfterCartDeletion() {
         //Given
-        User user = new User("name", "status", 1L);
+        User user = new User(TEST_USERNAME, TEST_USER_STATUS, TEST_USER_KEY);
         userRepository.save(user);
         Cart cart = user.getCart();
         long userId = user.getId();
