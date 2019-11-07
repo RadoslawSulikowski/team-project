@@ -16,8 +16,9 @@ public class User {
     @OneToMany(
             targetEntity = Order.class,
             mappedBy = "user",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            orphanRemoval = true,
+            cascade = CascadeType.ALL
     )
     private List<Order> orders = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
