@@ -1,10 +1,10 @@
 package com.kodilla.ecommercee.domain;
 
-
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.GroupRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
+import org.hibernate.Session;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
@@ -68,31 +67,19 @@ public class ProductEntityTestSuite {
     @Test
     public void shouldSaveGroupAfterProductDeletion() {
         //Given
-        Group group =new Group("ubrania");
-        Order order = new Order();
-        Cart cart = new Cart();
+        Group group = new Group("ubrania");
         Product product = new Product(NAME, DESCRIPTION, PRICE);
         Product product1 = new Product(NAME, DESCRIPTION, PRICE);
 
-        cart.getProducts().add(product);
-        cart.getProducts().add(product1);
-        order.getProducts().add(product);
-        order.getProducts().add(product1);
         group.getProducts().add(product);
         group.getProducts().add(product1);
 
         product.setGroup(group);
         product1.setGroup(group);
-        product.setOrder(order);
-        product1.setOrder(order);
-        product.setCart(cart);
-        product1.setCart(cart);
 
         //When
         productRepository.save(product);
         productRepository.save(product1);
-        cartRepository.save(cart);
-        orderRepository.save(order);
         groupRepository.save(group);
 
         //Then
@@ -102,30 +89,19 @@ public class ProductEntityTestSuite {
         assertTrue(groupRepository.existsById(group.getId()));
 
         //CleanUp
-        cartRepository.deleteById(cart.getCartId());
-        orderRepository.deleteById(order.getOrderId());
-        groupRepository.deleteById(group.getId());    }
+        groupRepository.deleteById(group.getId());
+    }
 
     @Test
     public void shouldSaveCartAfterProductDeletion() {
         //Given
-        Group group =new Group("ubrania");
-        Order order = new Order();
         Cart cart = new Cart();
         Product product = new Product(NAME, DESCRIPTION, PRICE);
         Product product1 = new Product(NAME, DESCRIPTION, PRICE);
 
         cart.getProducts().add(product);
         cart.getProducts().add(product1);
-        order.getProducts().add(product);
-        order.getProducts().add(product1);
-        group.getProducts().add(product);
-        group.getProducts().add(product1);
 
-        product.setGroup(group);
-        product1.setGroup(group);
-        product.setOrder(order);
-        product1.setOrder(order);
         product.setCart(cart);
         product1.setCart(cart);
 
@@ -133,8 +109,6 @@ public class ProductEntityTestSuite {
         productRepository.save(product);
         productRepository.save(product1);
         cartRepository.save(cart);
-        orderRepository.save(order);
-        groupRepository.save(group);
 
         //Then
         productRepository.delete(product);
@@ -144,39 +118,25 @@ public class ProductEntityTestSuite {
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
-        orderRepository.deleteById(order.getOrderId());
-        groupRepository.deleteById(group.getId());
     }
 
     @Test
     public void shouldSaveOrderAfterProductDeletion() {
         //Given
-        Group group = new Group("ubrania");
         Order order = new Order();
-        Cart cart = new Cart();
         Product product = new Product(NAME, DESCRIPTION, PRICE);
         Product product1 = new Product(NAME, DESCRIPTION, PRICE);
 
-        cart.getProducts().add(product);
-        cart.getProducts().add(product1);
         order.getProducts().add(product);
         order.getProducts().add(product1);
-        group.getProducts().add(product);
-        group.getProducts().add(product1);
 
-        product.setGroup(group);
-        product1.setGroup(group);
         product.setOrder(order);
         product1.setOrder(order);
-        product.setCart(cart);
-        product1.setCart(cart);
 
         //When
         productRepository.save(product);
         productRepository.save(product1);
-        cartRepository.save(cart);
         orderRepository.save(order);
-        groupRepository.save(group);
 
         //Then
         productRepository.delete(product);
@@ -185,8 +145,6 @@ public class ProductEntityTestSuite {
         assertTrue(orderRepository.existsById(order.getOrderId()));
 
         //CleanUp
-        cartRepository.deleteById(cart.getCartId());
         orderRepository.deleteById(order.getOrderId());
-        groupRepository.deleteById(group.getId());
     }
 }

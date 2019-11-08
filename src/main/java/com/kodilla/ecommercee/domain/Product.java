@@ -18,7 +18,7 @@ public class Product {
     private String description;
     @NotNull
     private BigDecimal price;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
     @ManyToOne
@@ -93,15 +93,5 @@ public class Product {
 
     public void setCart(Cart cart) {
         this.cart = cart;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", group=" + group +
-                '}';
     }
 }

@@ -10,15 +10,17 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @OneToMany(
             targetEntity = Product.class,
             mappedBy = "order",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
+            orphanRemoval = true,
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY    )
     private List<Product> products = new ArrayList<>();
 
 
@@ -47,6 +49,14 @@ public class Order {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", products=" + products +
+                '}';
     }
 }
 
