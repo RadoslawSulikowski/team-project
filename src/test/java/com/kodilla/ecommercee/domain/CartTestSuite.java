@@ -15,7 +15,7 @@ import java.util.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class CartEntityTestSuite {
+public class CartTestSuite {
 
     @Autowired
     private CartRepository cartRepository;
