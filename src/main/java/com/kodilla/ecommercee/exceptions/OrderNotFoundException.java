@@ -1,4 +1,4 @@
 package com.kodilla.ecommercee.exceptions;
 
-public class OrderNotFoundException {
+public class OrderNotFoundException extends Exception {
 }

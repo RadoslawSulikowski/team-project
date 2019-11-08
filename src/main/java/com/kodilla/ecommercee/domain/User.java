@@ -8,7 +8,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     @Column(unique = true)
     private String username;
     private String status;
@@ -33,7 +33,7 @@ public class User {
     }
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -54,7 +54,7 @@ public class User {
     }
 
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
