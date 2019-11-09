@@ -4,7 +4,6 @@ import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.GroupRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
-import org.hibernate.Session;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -85,7 +83,6 @@ public class ProductEntityTestSuite {
         //Then
         productRepository.delete(product);
         productRepository.delete(product1);
-
         assertTrue(groupRepository.existsById(group.getId()));
 
         //CleanUp
@@ -104,6 +101,7 @@ public class ProductEntityTestSuite {
 
         product.setCart(cart);
         product1.setCart(cart);
+
 
         //When
         productRepository.save(product);
