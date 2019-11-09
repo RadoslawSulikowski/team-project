@@ -17,7 +17,7 @@ import java.util.Optional;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class OrderTestSuite {
+public class OrderEntityTestSuite {
     @Autowired
     OrderRepository orderRepository;
     @Autowired
