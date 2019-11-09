@@ -19,7 +19,6 @@ public class OrderService {
     }
 
     public Order saveOrder(final Order order) {
-        System.out.println(order);
        return orderRepository.save(order);
     }
 

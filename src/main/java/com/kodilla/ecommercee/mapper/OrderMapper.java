@@ -5,6 +5,7 @@ import com.kodilla.ecommercee.domain.OrderDto;
 import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.domain.ProductDto;
 import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
+import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
 import com.kodilla.ecommercee.exceptions.UserNotFoundException;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.UserRepository;
@@ -26,16 +27,18 @@ public class OrderMapper {
     @Autowired
     OrderRepository orderRepository;
 
-    public Order mapToOrder(OrderDto orderDto) throws UserNotFoundException, GroupNotFoundException {
+    public Order mapToOrder(OrderDto orderDto) throws UserNotFoundException, ProductNotFoundException {
         if (orderRepository.findById(orderDto.getId()).isPresent()) {
             Order orderToUpdate = orderRepository.findById(orderDto.getId()).get();
             orderToUpdate.setProduct(productMapper.mapToProductList(orderDto.getProducts()));
+            orderToUpdate.getProduct().forEach(p -> p.getOrders().add(orderToUpdate));
             orderToUpdate.setUser(userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new));
             return orderToUpdate;
         } else {
             Order order = new Order();
             order.setUser(userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new));
             order.setProduct(productMapper.mapToProductList(orderDto.getProducts()));
+            order.getProduct().forEach(p -> p.getOrders().add(order));
             return order;
         }
     }

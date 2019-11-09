@@ -4,6 +4,7 @@ package com.kodilla.ecommercee.controller;
 import com.kodilla.ecommercee.domain.OrderDto;
 import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
 import com.kodilla.ecommercee.exceptions.OrderNotFoundException;
+import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
 import com.kodilla.ecommercee.exceptions.UserNotFoundException;
 import com.kodilla.ecommercee.mapper.OrderMapper;
 import com.kodilla.ecommercee.service.OrderService;
@@ -32,12 +33,12 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createOrder")
-    public void createOrder(@RequestBody OrderDto orderDto) throws UserNotFoundException, GroupNotFoundException {
+    public void createOrder(@RequestBody OrderDto orderDto) throws UserNotFoundException, GroupNotFoundException, ProductNotFoundException {
         orderService.saveOrder(orderMapper.mapToOrder(orderDto));
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateOrder")
-    public OrderDto updateOrder(@RequestBody OrderDto orderDto) throws OrderNotFoundException, UserNotFoundException, GroupNotFoundException {
+    public OrderDto updateOrder(@RequestBody OrderDto orderDto) throws OrderNotFoundException, UserNotFoundException, GroupNotFoundException, ProductNotFoundException {
         return orderMapper.mapToOrderDto(orderService.saveOrder(orderMapper.mapToOrder(orderDto)));
     }
 

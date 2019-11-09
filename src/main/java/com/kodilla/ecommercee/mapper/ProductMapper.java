@@ -1,12 +1,15 @@
 package com.kodilla.ecommercee.mapper;
+
 import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.domain.ProductDto;
 import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
+import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
 import com.kodilla.ecommercee.repository.GroupRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,13 +27,14 @@ public class ProductMapper {
                 .collect(Collectors.toList());
     }
 
-    public List<Product> mapToProductList(final List<ProductDto> productDtos) throws GroupNotFoundException {
-        List<Product> products = productDtos.stream()
-                .map(n -> new Product(n.getName(), n.getDescription(), n.getPrice()))
-                .collect(Collectors.toList());
-        for (int i = 0; i < products.size(); i++) {
-            products.get(i).setId(productDtos.get(i).getId());
-            products.get(i).setGroup(groupRepository.findById(productDtos.get(i).getGroupId()).orElseThrow(GroupNotFoundException::new));
+    public List<Product> mapToProductList(final List<ProductDto> productDtos) throws ProductNotFoundException {
+        List<Product> products = new ArrayList<>();
+        for (ProductDto p : productDtos) {
+            if (productRepository.findById(p.getId()).isPresent()) {
+                products.add(productRepository.findById(p.getId()).get());
+            } else {
+                throw new ProductNotFoundException();
+            }
         }
         return products;
     }

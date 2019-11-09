@@ -2,19 +2,22 @@ package com.kodilla.ecommercee.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "PRODUCTS")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "PRODUCT_ID")
     private Long id;
     private String name;
     private String description;
     private BigDecimal price;
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "products")
+    private List<Order> orders = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
@@ -52,14 +55,11 @@ public class Product {
 
     public Group getGroup() {
         return group;
-     }
+    }
 
-    public Order getOrder() {
-        return order;
-      }
 
     public Cart getCart() {
-      return cart;
+        return cart;
     }
 
 
@@ -83,11 +83,16 @@ public class Product {
         this.group = group;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
     public void setCart(Cart cart) {
         this.cart = cart;
     }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
 }
