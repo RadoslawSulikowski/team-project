@@ -1,9 +1,18 @@
 package com.kodilla.ecommercee.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity(name = "PRODUCTS")
 public class Product {
 
@@ -12,86 +21,31 @@ public class Product {
     @NotNull
     @Column(name = "ID", unique = true)
     private Long id;
+
     @NotNull
     private String name;
+
     @NotNull
     private String description;
+
     @NotNull
     private BigDecimal price;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
+
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
+
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-
-    public Product(String name, String description, BigDecimal price) {
+    public Product(@NotNull String name, @NotNull String description, @NotNull BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
-    }
-
-    public Product() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
     }
 }
