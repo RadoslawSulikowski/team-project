@@ -83,7 +83,11 @@ public class ProductEntityTestSuite {
         //Then
         productRepository.delete(product);
         productRepository.delete(product1);
+        group.getProducts().clear();
+
         assertTrue(groupRepository.existsById(group.getId()));
+        assertFalse(productRepository.existsById(product.getId()));
+        assertFalse(productRepository.existsById(product1.getId()));
 
         //CleanUp
         groupRepository.deleteById(group.getId());
@@ -111,8 +115,11 @@ public class ProductEntityTestSuite {
         //Then
         productRepository.delete(product);
         productRepository.delete(product1);
+        cart.getProducts().clear();
 
         assertTrue(cartRepository.existsById(cart.getCartId()));
+        assertFalse(productRepository.existsById(product.getId()));
+        assertFalse(productRepository.existsById(product1.getId()));
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
@@ -139,8 +146,11 @@ public class ProductEntityTestSuite {
         //Then
         productRepository.delete(product);
         productRepository.delete(product1);
+        order.getProducts().clear();
 
         assertTrue(orderRepository.existsById(order.getOrderId()));
+        assertFalse(productRepository.existsById(product.getId()));
+        assertFalse(productRepository.existsById(product1.getId()));
 
         //CleanUp
         orderRepository.deleteById(order.getOrderId());
