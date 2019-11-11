@@ -1,25 +1,18 @@
 package com.kodilla.ecommercee.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class OrderDto {
+
     private Long id;
     private List<ProductDto> products = new ArrayList<>();
-
-    public OrderDto(Long id, List<ProductDto> products) {
-        this.id = id;
-        this.products = products;
-    }
-
-    public OrderDto() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public List<ProductDto> getProducts() {
-        return products;
-    }
 }
