@@ -1,9 +1,18 @@
 package com.kodilla.ecommercee.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity(name = "ORDERS")
 public class Order {
 
@@ -18,45 +27,8 @@ public class Order {
     @OneToMany(
             targetEntity = Product.class,
             mappedBy = "order",
-            orphanRemoval = true,
-            cascade = CascadeType.PERSIST,
-            fetch = FetchType.LAZY    )
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
     private List<Product> products = new ArrayList<>();
-
-
-    public Order() {
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderId=" + orderId +
-                ", products=" + products +
-                '}';
-    }
 }
 

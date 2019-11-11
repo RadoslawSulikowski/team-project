@@ -1,11 +1,20 @@
 package com.kodilla.ecommercee.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.CascadeType.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity(name = "CARTS")
 public class Cart {
 
@@ -22,33 +31,4 @@ public class Cart {
 
     @OneToOne(cascade = {PERSIST, REFRESH, MERGE}, fetch = FetchType.EAGER)
     private User user;
-
-    public Cart() {
-    }
-
-
-    public Long getCartId() {
-        return cartId;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-
-    public void setCartId(Long cartId) {
-        this.cartId = cartId;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public void setUser(User user){
-        this.user = user;
-    }
 }
