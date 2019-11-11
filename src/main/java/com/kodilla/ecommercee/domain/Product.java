@@ -1,6 +1,7 @@
 package com.kodilla.ecommercee.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity(name = "PRODUCTS")
@@ -8,11 +9,16 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
+    @Column(name = "ID", unique = true)
     private Long id;
+    @NotNull
     private String name;
+    @NotNull
     private String description;
+    @NotNull
     private BigDecimal price;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
     @ManyToOne
@@ -30,9 +36,7 @@ public class Product {
     }
 
     public Product() {
-
     }
-
 
     public Long getId() {
         return id;

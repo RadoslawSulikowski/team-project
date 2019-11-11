@@ -20,14 +20,12 @@ public class Group {
     )
     private List<Product> products = new ArrayList<>();
 
-
     public Group(String name) {
         this.name = name;
     }
 
     public Group() {
     }
-
 
     public Long getId() {
         return id;
@@ -40,7 +38,6 @@ public class Group {
     public List<Product> getProducts() {
         return products;
     }
-
 
     public void setId(Long id) {
         this.id = id;
