@@ -55,7 +55,7 @@ public class CartEntityTestSuite {
 
         //Then
         productsList.remove(product.getId());
-        Assert.assertFalse(cartRepository.existsById(product.getId()));
+        Assert.assertFalse(productsList.isEmpty());
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
@@ -63,7 +63,7 @@ public class CartEntityTestSuite {
     }
 
     @Test
-    public void testDeleteProductFromRespository() {
+    public void testDeleteProductFromRepository() {
         //Given
         Cart cart = new Cart();
         Product product = new Product();
@@ -115,10 +115,10 @@ public class CartEntityTestSuite {
 
         //When
         cartRepository.save(cart);
-        productRepository.deleteById(product.getId());
+        productsList.remove(product.getId());
 
         //Then
-        Assert.assertTrue(cartRepository.existsById(cart.getCartId()));
+        Assert.assertTrue(productRepository.existsById(product.getId()));
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
