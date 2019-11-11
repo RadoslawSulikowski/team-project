@@ -32,7 +32,6 @@ public class OrderMapper {
             Order orderToUpdate = orderRepository.findById(orderDto.getId()).get();
             orderToUpdate.setProduct(productMapper.mapToProductList(orderDto.getProducts()));
             orderToUpdate.getProduct().forEach(p -> p.getOrders().add(orderToUpdate));
-            orderToUpdate.setUser(userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new));
             return orderToUpdate;
         } else {
             Order order = new Order();

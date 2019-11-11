@@ -2,6 +2,7 @@ package com.kodilla.ecommercee.repository;
 
 import com.kodilla.ecommercee.domain.Order;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -25,5 +26,7 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
 
     @Override
     long count();
+
+    List<Order> retrieveOrdersByUserId(@Param("USER_ID") Long userId);
 }
 

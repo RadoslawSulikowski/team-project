@@ -27,6 +27,11 @@ public class OrderController {
         return orderMapper.mapToOrderDtoList(orderService.getAllOrders());
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "getUserOrders")
+    public List<OrderDto> getUserOrders(@RequestParam Long userId){
+        return orderMapper.mapToOrderDtoList(orderService.getAllUserOrders(userId));
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "getOrder")
     public OrderDto getOrder(@RequestParam Long orderId) throws OrderNotFoundException {
         return orderMapper.mapToOrderDto(orderService.getOrder(orderId).orElseThrow(OrderNotFoundException::new));

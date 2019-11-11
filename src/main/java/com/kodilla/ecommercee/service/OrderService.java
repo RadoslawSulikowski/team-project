@@ -5,6 +5,7 @@ import com.kodilla.ecommercee.exceptions.OrderNotFoundException;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +19,12 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> getAllUserOrders(final Long id) {
+        return orderRepository.retrieveOrdersByUserId(id);
+    }
+
     public Order saveOrder(final Order order) {
-       return orderRepository.save(order);
+        return orderRepository.save(order);
     }
 
     public Optional<Order> getOrder(final Long id) throws OrderNotFoundException {
