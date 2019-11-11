@@ -18,11 +18,16 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "USER_ID")
     private Long id;
 
-    @Column(unique = true)
+    @Column(name = "USER_NAME", unique = true)
     private String username;
+
+    @Column(name = "STATUS")
     private String status;
+
+    @Column(name = "USER_KEY")
     private Long userKey;
 
     @OneToMany(

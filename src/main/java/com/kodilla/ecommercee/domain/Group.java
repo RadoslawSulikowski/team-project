@@ -19,15 +19,18 @@ public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "GROUP_ID")
     private Long id;
 
+    @Column(name = "NAME")
     private String name;
 
-    @OneToMany(
-            targetEntity = Product.class,
-            mappedBy = "group",
-            cascade = CascadeType.PERSIST,
-            fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(
+            name = "JOIN_GROUP_PRODUCT",
+            joinColumns = {@JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")}
+    )
     private List<Product> products = new ArrayList<>();
 
     public Group(String name) {

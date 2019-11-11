@@ -32,11 +32,13 @@ public class ProductEntityTestSuite {
     private static final String NAME = "product";
     private static final String DESCRIPTION = "Pellentesque";
     private static final BigDecimal PRICE = new BigDecimal(500);
+    private static final Long GROUP_ID = 1L;
+
 
     @Test
     public void givenProductRepository_testSaveAndFindByIdMethods() {
         //Given
-        Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
+        Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE, GROUP_ID));
 
         //When & Then
         Optional<Product> foundProduct = productRepository.findById(product.getId());
@@ -51,7 +53,7 @@ public class ProductEntityTestSuite {
     @Test
     public void givenProductRepository_TestDeleteMethod() {
         //Given
-        Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE));
+        Product product = productRepository.save(new Product(NAME, DESCRIPTION, PRICE, GROUP_ID));
 
         //When
         productRepository.deleteById(product.getId());
@@ -66,14 +68,14 @@ public class ProductEntityTestSuite {
     public void shouldSaveGroupAfterProductDeletion() {
         //Given
         Group group = new Group("ubrania");
-        Product product = new Product(NAME, DESCRIPTION, PRICE);
-        Product product1 = new Product(NAME, DESCRIPTION, PRICE);
+        Product product = new Product(NAME, DESCRIPTION, PRICE, GROUP_ID);
+        Product product1 = new Product(NAME, DESCRIPTION, PRICE, GROUP_ID);
 
         group.getProducts().add(product);
         group.getProducts().add(product1);
 
-        product.setGroup(group);
-        product1.setGroup(group);
+        product.getGroups().add(group);
+        product1.getGroups().add(group);
 
         //When
         productRepository.save(product);
@@ -97,14 +99,14 @@ public class ProductEntityTestSuite {
     public void shouldSaveCartAfterProductDeletion() {
         //Given
         Cart cart = new Cart();
-        Product product = new Product(NAME, DESCRIPTION, PRICE);
-        Product product1 = new Product(NAME, DESCRIPTION, PRICE);
+        Product product = new Product(NAME, DESCRIPTION, PRICE, GROUP_ID);
+        Product product1 = new Product(NAME, DESCRIPTION, PRICE, GROUP_ID);
 
         cart.getProducts().add(product);
         cart.getProducts().add(product1);
 
-        product.setCart(cart);
-        product1.setCart(cart);
+        product.getCarts().add(cart);
+        product1.getCarts().add(cart);
 
 
         //When
@@ -117,26 +119,25 @@ public class ProductEntityTestSuite {
         productRepository.delete(product1);
         cart.getProducts().clear();
 
-        assertTrue(cartRepository.existsById(cart.getCartId()));
+        assertFalse(cartRepository.existsById(cart.getCartId()));
         assertFalse(productRepository.existsById(product.getId()));
         assertFalse(productRepository.existsById(product1.getId()));
 
         //CleanUp
-        cartRepository.deleteById(cart.getCartId());
     }
 
     @Test
     public void shouldSaveOrderAfterProductDeletion() {
         //Given
         Order order = new Order();
-        Product product = new Product(NAME, DESCRIPTION, PRICE);
-        Product product1 = new Product(NAME, DESCRIPTION, PRICE);
+        Product product = new Product(NAME, DESCRIPTION, PRICE, GROUP_ID);
+        Product product1 = new Product(NAME, DESCRIPTION, PRICE, GROUP_ID);
 
         order.getProducts().add(product);
         order.getProducts().add(product1);
 
-        product.setOrder(order);
-        product1.setOrder(order);
+        product.getOrders().add(order);
+        product1.getOrders().add(order);
 
         //When
         productRepository.save(product);
@@ -148,11 +149,10 @@ public class ProductEntityTestSuite {
         productRepository.delete(product1);
         order.getProducts().clear();
 
-        assertTrue(orderRepository.existsById(order.getOrderId()));
+        assertFalse(orderRepository.existsById(order.getOrderId()));
         assertFalse(productRepository.existsById(product.getId()));
         assertFalse(productRepository.existsById(product1.getId()));
 
         //CleanUp
-        orderRepository.deleteById(order.getOrderId());
     }
 }

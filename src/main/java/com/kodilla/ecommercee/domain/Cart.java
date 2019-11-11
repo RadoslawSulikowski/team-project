@@ -20,13 +20,15 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "CART_ID")
     private Long cartId;
 
-    @OneToMany(
-            targetEntity = Product.class,
-            mappedBy = "cart",
-            cascade = ALL,
-            fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(
+            name = "JOIN_CART_PRODUCT",
+            joinColumns = {@JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")}
+    )
     private List<Product> products = new ArrayList<>();
 
     @OneToOne(cascade = {PERSIST, REFRESH, MERGE}, fetch = FetchType.EAGER)

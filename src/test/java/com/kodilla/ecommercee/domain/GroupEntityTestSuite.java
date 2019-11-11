@@ -1,7 +1,5 @@
 package com.kodilla.ecommercee.domain;
 
-import com.kodilla.ecommercee.domain.Group;
-import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.repository.GroupRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
 import org.junit.Assert;
@@ -10,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +31,11 @@ public class GroupEntityTestSuite {
         Group group4 = new Group("Dom");
         Group group5 = new Group("Ogród");
 
-        Product product1 = new Product("Bluza", "Wełniana bluza", new BigDecimal(79.99));
-        Product product2 = new Product("Spodnie", "Dżinsowe czarne spodnie", new BigDecimal(99.99));
-        Product product3 = new Product("T-shirt", "Czerwony T-shirt", new BigDecimal(74.99));
-        Product product4 = new Product("Buty", "Czarne adidasy", new BigDecimal(179.99));
-        Product product5 = new Product("Kurtka", "Kurtka zimowa", new BigDecimal(109.99));
+        Product product1 = productRepository.save(new Product("Bluza", "Wełniana bluza", new BigDecimal(79.99), 1L));
+        Product product2 = productRepository.save(new Product("Spodnie", "Dżinsowe czarne spodnie", new BigDecimal(99.99), 1L));
+        Product product3 = productRepository.save(new Product("T-shirt", "Czerwony T-shirt", new BigDecimal(74.99), 1L));
+        Product product4 = productRepository.save(new Product("Buty", "Czarne adidasy", new BigDecimal(179.99), 1L));
+        Product product5 = productRepository.save(new Product("Kurtka", "Kurtka zimowa", new BigDecimal(109.99), 1L));
 
         List<Product> listOfProducts = new ArrayList<>();
         listOfProducts.add(product1);

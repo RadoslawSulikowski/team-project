@@ -23,7 +23,7 @@ public class OrderController {
     @RequestMapping(method = RequestMethod.POST, value = "createOrder")
     ///before final implementation change to void
     public String createOrder(@RequestBody OrderDto orderDto) {
-        return "Order created correctly: \nid: " + orderDto.getId() + "\nproducts: " + orderDto.getProducts();
+        return "Order created correctly: \nid: " + orderDto.getId()+ "\nproducts: " + orderDto.getProducts();
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateOrder")

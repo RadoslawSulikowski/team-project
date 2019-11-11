@@ -6,8 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import static javax.persistence.CascadeType.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,34 +21,43 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
-    @Column(name = "ID", unique = true)
+    @Column(name = "PRODUCT_ID", unique = true)
     private Long id;
 
-    @NotNull
+    @Column(name = "NAME")
     private String name;
 
-    @NotNull
+    @Column(name = "DESCRIPTION")
     private String description;
 
-    @NotNull
+    @Column(name = "PRICE")
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @Column(name = "GROUP_ID")
+    private Long groupId;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    private Group group;
+    @ManyToMany(
+            cascade = ALL,
+            mappedBy = "products",
+            targetEntity = Order.class)
+    private List<Order> orders = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
+    @ManyToMany(
+            cascade = {MERGE, PERSIST, REFRESH},
+            mappedBy = "products",
+            targetEntity = Group.class)
+    private List<Group> groups = new ArrayList<>();
 
-    public Product(@NotNull String name, @NotNull String description, @NotNull BigDecimal price) {
+    @ManyToMany(
+            cascade = ALL,
+            mappedBy = "products",
+            targetEntity = Cart.class)
+    private List<Cart> carts = new ArrayList<>();
+
+    public Product(String name, String description, BigDecimal price, Long groupId) {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.groupId = groupId;
     }
 }
