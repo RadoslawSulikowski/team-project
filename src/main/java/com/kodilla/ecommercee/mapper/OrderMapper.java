@@ -21,23 +21,26 @@ import java.util.stream.Collectors;
 public class OrderMapper {
 
     @Autowired
-    ProductMapper productMapper;
+    ItemMapper itemMapper;
+
     @Autowired
     UserRepository userRepository;
+
     @Autowired
     OrderRepository orderRepository;
+
 
     public Order mapToOrder(OrderDto orderDto) throws UserNotFoundException, ProductNotFoundException {
         if (orderRepository.findById(orderDto.getId()).isPresent()) {
             Order orderToUpdate = orderRepository.findById(orderDto.getId()).get();
-            orderToUpdate.setProduct(productMapper.mapToProductList(orderDto.getProducts()));
-            orderToUpdate.getProduct().forEach(p -> p.getOrders().add(orderToUpdate));
+            orderToUpdate.setItems(itemMapper.mapToItemsList(orderDto.getItems()));
+            orderToUpdate.getItems().forEach(p -> p.setOrder(orderToUpdate));
             return orderToUpdate;
         } else {
             Order order = new Order();
             order.setUser(userRepository.findById(orderDto.getUserId()).orElseThrow(UserNotFoundException::new));
-            order.setProduct(productMapper.mapToProductList(orderDto.getProducts()));
-            order.getProduct().forEach(p -> p.getOrders().add(order));
+            order.setItems(itemMapper.mapToItemsList(orderDto.getItems()));
+            order.getItems().forEach(p -> p.setOrder(order));
             return order;
         }
     }
@@ -45,7 +48,7 @@ public class OrderMapper {
     public OrderDto mapToOrderDto(Order order) {
         return new OrderDto(
                 order.getOrderId(),
-                productMapper.mapToProductDtoList(order.getProduct()),
+                itemMapper.mapToItemsDtoList(order.getItems()),
                 order.getUser().getId()
         );
     }
@@ -53,7 +56,7 @@ public class OrderMapper {
     public List<OrderDto> mapToOrderDtoList(final List<Order> orders) {
         if (orders != null) {
             return orders.stream()
-                    .map(t -> new OrderDto(t.getOrderId(), productMapper.mapToProductDtoList(t.getProduct()), t.getUser().getId()))
+                    .map(t -> new OrderDto(t.getOrderId(), itemMapper.mapToItemsDtoList(t.getItems()), t.getUser().getId()))
                     .collect(Collectors.toList());
         } else return new ArrayList<>();
     }

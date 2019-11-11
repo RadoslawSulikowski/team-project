@@ -12,21 +12,12 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class OrderDto {
-
     private Long id;
-    private List<ProductDto> products = new ArrayList<>();
+    private List<ItemDto> items = new ArrayList<>();
     private Long userId;
 
-
-    public Long getUserId(){
-        return userId;
+    public OrderDto(List<ItemDto> items, Long userId){
+        this.items=items;
+        this.userId=userId;
     }
-    public Long getId() {
-        return id;
-    }
-
-    public List<ProductDto> getProducts() {
-        return products;
-    }
-
 }

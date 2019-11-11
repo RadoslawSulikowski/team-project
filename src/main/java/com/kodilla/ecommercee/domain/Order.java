@@ -17,7 +17,7 @@ import java.util.List;
 @NamedQuery(
         name = "Order.retrieveOrdersByUserId",
         query = "FROM ORDERS WHERE user_id = :USER_ID"
-        )
+)
 @Entity(name = "ORDERS")
 public class Order {
 
@@ -30,48 +30,18 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "JOIN_ORDER_PRODUCT",
-            joinColumns = {@JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")}
+    @OneToMany(
+            targetEntity = Item.class,
+            mappedBy = "order",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
     )
-    private List<Product> products = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public List<Product> getProduct() {
-        return products;
-    }
-
-
-    public void setUser(User user) {
+    public Order(User user, List<Item> items) {
         this.user = user;
+        this.items = items;
     }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setProduct(List<Product> products) {
-        this.products = products;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderId=" + orderId +
-                ", user=" + user +
-                ", products=" + products +
-                '}';
-    }
-
 
 }
 
