@@ -57,6 +57,10 @@ public class Product {
         return group;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
 
     public Cart getCart() {
         return cart;
