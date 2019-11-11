@@ -1,11 +1,18 @@
 package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.domain.UserDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/user")
 public class UserController {
+
+    //@Autowired
+    //UserService userService;
+    //@Autowired
+    //UserMapper userMapper;
+
     @RequestMapping(method = RequestMethod.POST, value = "createUser")
     public String createUser(@RequestBody UserDto userDto) {
         return "Create new user: " + userDto.getId() + " " + userDto.getUsername();

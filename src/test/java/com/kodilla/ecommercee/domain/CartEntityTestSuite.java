@@ -2,6 +2,7 @@ package com.kodilla.ecommercee.domain;
 
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
+import com.kodilla.ecommercee.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,12 +16,14 @@ import java.util.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class CartTestSuite {
+public class CartEntityTestSuite {
 
     @Autowired
     private CartRepository cartRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 
     @Test
@@ -54,7 +57,7 @@ public class CartTestSuite {
         cartRepository.save(cart);
 
         //Then
-        productRepository.deleteById(product.getId());
+        productsList.remove(product.getId());
         Assert.assertFalse(cartRepository.existsById(product.getId()));
 
         //CleanUp
@@ -63,7 +66,7 @@ public class CartTestSuite {
     }
 
     @Test
-    public void testDeleteProductNotFromProducts() {
+    public void testDeleteProductFromRespository() {
         //Given
         Cart cart = new Cart();
         Product product = new Product();
@@ -77,7 +80,7 @@ public class CartTestSuite {
 
         //Then
         productRepository.deleteById(product.getId());
-        Assert.assertTrue(productRepository.existsById(product.getId()));
+        Assert.assertFalse(productRepository.existsById(product.getId()));
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
@@ -98,10 +101,67 @@ public class CartTestSuite {
         cartRepository.save(cart);
 
         //Then
-        Assert.assertFalse(cartRepository.existsById(product.getId()));
+        Assert.assertTrue(productsList.isEmpty());
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
 
+    }
+
+    @Test
+    public void testCartRemainsAfterProductDeletion() {
+        //Given
+       Product product = new Product();
+        productRepository.save(product);
+        Cart cart = new Cart();
+        long productId = product.getId();
+        long cartId = cart.getCartId();
+
+        //When
+        productRepository.deleteById(productId);
+
+        //Then
+        Assert.assertTrue(cartRepository.existsById(cartId));
+
+        //CleanUp
+        cartRepository.deleteById(cart.getCartId());
+    }
+
+    @Test
+    public void testProductRemainsAfterCartDeletion() {
+        //Given
+        Product product = new Product();
+        productRepository.save(product);
+        Cart cart = new Cart();
+        long productId = product.getId();
+        long cartId = cart.getCartId();
+
+        //When
+        cartRepository.deleteById(cartId);
+
+        //Then
+        Assert.assertTrue(productRepository.existsById(productId));
+
+        //CleanUp
+        cartRepository.deleteById(cart.getCartId());
+    }
+
+    @Test
+    public void testCartRemainsAfterUserDeletion() {
+        //Given
+        User user = new User();
+        userRepository.save(user);
+        Cart cart = new Cart();
+        long userId = user.getId();
+        long cartId = cart.getCartId();
+
+        //When
+        userRepository.deleteById(cartId);
+
+        //Then
+        Assert.assertTrue(cartRepository.existsById(cartId));
+
+        //CleanUp
+        cartRepository.deleteById(cart.getCartId());
     }
 }
