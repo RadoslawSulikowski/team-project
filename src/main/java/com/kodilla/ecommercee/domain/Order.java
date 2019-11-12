@@ -29,6 +29,6 @@ public class Order {
             mappedBy = "order",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private List<Product> products = new ArrayList<>();
+    private List<Product> items = new ArrayList<>();
 }
 
