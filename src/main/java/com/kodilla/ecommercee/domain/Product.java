@@ -39,6 +39,10 @@ public class Product {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    private Item item;
+
     public Product(@NotNull String name, @NotNull String description, @NotNull BigDecimal price) {
         this.name = name;
         this.description = description;
