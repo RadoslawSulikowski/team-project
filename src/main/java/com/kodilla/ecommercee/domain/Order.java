@@ -38,11 +38,6 @@ public class Order {
     )
     private List<Item> items = new ArrayList<>();
 
-    public Order(User user, List<Item> items) {
-        this.user = user;
-        this.items = items;
-    }
-
 }
 
 

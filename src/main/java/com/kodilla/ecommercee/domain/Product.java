@@ -33,9 +33,6 @@ public class Product {
     @NotNull
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "group_id")

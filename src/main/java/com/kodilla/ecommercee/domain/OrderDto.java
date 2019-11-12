@@ -16,8 +16,4 @@ public class OrderDto {
     private List<ItemDto> items = new ArrayList<>();
     private Long userId;
 
-    public OrderDto(List<ItemDto> items, Long userId){
-        this.items=items;
-        this.userId=userId;
-    }
 }
