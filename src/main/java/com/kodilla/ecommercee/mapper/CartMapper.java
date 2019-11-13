@@ -2,6 +2,8 @@ package com.kodilla.ecommercee.mapper;
 
 import com.kodilla.ecommercee.domain.*;
 import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
+import com.kodilla.ecommercee.domain.Cart;
+import com.kodilla.ecommercee.domain.CartDto;
 import com.kodilla.ecommercee.exceptions.UserNotFoundException;
 import com.kodilla.ecommercee.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
