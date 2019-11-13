@@ -23,11 +23,11 @@ public class Cart {
     private Long cartId;
 
     @OneToMany(
-            targetEntity = Product.class,
+            targetEntity = Item.class,
             mappedBy = "cart",
             cascade = ALL,
             fetch = FetchType.LAZY)
-    private List<Product> products = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
     @OneToOne(cascade = {PERSIST, REFRESH, MERGE}, fetch = FetchType.EAGER)
     private User user;

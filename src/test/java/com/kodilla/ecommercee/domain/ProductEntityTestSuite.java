@@ -100,11 +100,19 @@ public class ProductEntityTestSuite {
         Product product = new Product(NAME, DESCRIPTION, PRICE);
         Product product1 = new Product(NAME, DESCRIPTION, PRICE);
 
-        cart.getProducts().add(product);
-        cart.getProducts().add(product1);
+        Item item1 = new Item();
+        item1.setProduct(product);
+        Item item2 = new Item();
+        item2.setProduct(product1);
 
-        product.setCart(cart);
-        product1.setCart(cart);
+        product.getItems().add(item1);
+        product1.getItems().add(item2);
+
+        cart.getItems().add(item1);
+        cart.getItems().add(item2);
+
+        item1.setCart(cart);
+        item2.setCart(cart);
 
 
         //When
@@ -115,7 +123,7 @@ public class ProductEntityTestSuite {
         //Then
         productRepository.delete(product);
         productRepository.delete(product1);
-        cart.getProducts().clear();
+        cart.getItems().clear();
 
         assertTrue(cartRepository.existsById(cart.getCartId()));
         assertFalse(productRepository.existsById(product.getId()));
@@ -137,8 +145,8 @@ public class ProductEntityTestSuite {
         Item item2 = new Item();
         item2.setProduct(product1);
 
-        product.setItem(item1);
-        product1.setItem(item2);
+        product.getItems().add(item1);
+        product1.getItems().add(item2);
 
         order.getItems().add(item1);
         order.getItems().add(item2);
