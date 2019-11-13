@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee.domain;
 
+import com.kodilla.ecommercee.repository.ItemRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
 import com.kodilla.ecommercee.repository.UserRepository;
@@ -22,6 +23,8 @@ public class OrderEntityTestSuite {
     OrderRepository orderRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ItemRepository itemRepository;
     @Autowired
     ProductRepository productRepository;
 
@@ -115,30 +118,51 @@ public class OrderEntityTestSuite {
 
     @Test
     public void testProductRelation() {
+
         //Given
         Product product1 = new Product();
         Product product2 = new Product();
+
         Order order = new Order();
-        order.getProducts().add(product1);
-        order.getProducts().add(product2);
-        product1.setOrder(order);
-        product2.setOrder(order);
-        orderRepository.save(order);
+        Item item1 = new Item();
+        Item item2 = new Item();
+
+        item1.setProduct(product1);
+        item1.setQuantity(3.0);
+
+        item2.setProduct(product2);
+        item2.setQuantity(2.0);
+
+        item1.setOrder(order);
+        item2.setOrder(order);
+
+        product1.getItems().add(item1);
+        product2.getItems().add(item2);
+
+        order.getItems().add(item1);
+        order.getItems().add(item2);
+
         productRepository.save(product1);
         productRepository.save(product2);
+        itemRepository.save(item1);
+        itemRepository.save(item2);
+        orderRepository.save(order);
+
 
         //When
         Optional<Order> testOrder = orderRepository.findById(order.getOrderId());
-        Optional<Product> testProduct = productRepository.findById(product1.getId());
+        Optional<Item> testItem = itemRepository.findById(item1.getId());
 
-        List<Product> products = testOrder.get().getProducts();
-        Long orderId = testProduct.get().getOrder().getOrderId();
+        List<Item> items = testOrder.get().getItems();
+        Long orderId = testItem.get().getOrder().getOrderId();
 
         //Then
-        Assert.assertEquals(2, products.size());
+        Assert.assertEquals(2, items.size());
         Assert.assertEquals(order.getOrderId(), orderId);
 
         //CleanUp
+        itemRepository.deleteById(item1.getId());
+        itemRepository.deleteById(item2.getId());
         productRepository.deleteById(product1.getId());
         productRepository.deleteById(product2.getId());
         orderRepository.deleteById(order.getOrderId());

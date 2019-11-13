@@ -1,16 +1,13 @@
 package com.kodilla.ecommercee.domain;
 
-import com.kodilla.ecommercee.repository.CartRepository;
-import com.kodilla.ecommercee.repository.GroupRepository;
-import com.kodilla.ecommercee.repository.OrderRepository;
-import com.kodilla.ecommercee.repository.ProductRepository;
+import com.kodilla.ecommercee.repository.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -28,6 +25,9 @@ public class ProductEntityTestSuite {
     OrderRepository orderRepository;
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ItemRepository itemRepository;
 
     private static final String NAME = "product";
     private static final String DESCRIPTION = "Pellentesque";
@@ -100,11 +100,19 @@ public class ProductEntityTestSuite {
         Product product = new Product(NAME, DESCRIPTION, PRICE);
         Product product1 = new Product(NAME, DESCRIPTION, PRICE);
 
-        cart.getProducts().add(product);
-        cart.getProducts().add(product1);
+        Item item1 = new Item();
+        item1.setProduct(product);
+        Item item2 = new Item();
+        item2.setProduct(product1);
 
-        product.setCart(cart);
-        product1.setCart(cart);
+        product.getItems().add(item1);
+        product1.getItems().add(item2);
+
+        cart.getItems().add(item1);
+        cart.getItems().add(item2);
+
+        item1.setCart(cart);
+        item2.setCart(cart);
 
 
         //When
@@ -115,7 +123,7 @@ public class ProductEntityTestSuite {
         //Then
         productRepository.delete(product);
         productRepository.delete(product1);
-        cart.getProducts().clear();
+        cart.getItems().clear();
 
         assertTrue(cartRepository.existsById(cart.getCartId()));
         assertFalse(productRepository.existsById(product.getId()));
@@ -132,21 +140,33 @@ public class ProductEntityTestSuite {
         Product product = new Product(NAME, DESCRIPTION, PRICE);
         Product product1 = new Product(NAME, DESCRIPTION, PRICE);
 
-        order.getProducts().add(product);
-        order.getProducts().add(product1);
+        Item item1 = new Item();
+        item1.setProduct(product);
+        Item item2 = new Item();
+        item2.setProduct(product1);
 
-        product.setOrder(order);
-        product1.setOrder(order);
+        product.getItems().add(item1);
+        product1.getItems().add(item2);
+
+        order.getItems().add(item1);
+        order.getItems().add(item2);
+
+        item1.setOrder(order);
+        item2.setOrder(order);
 
         //When
         productRepository.save(product);
         productRepository.save(product1);
+
+        itemRepository.save(item1);
+        itemRepository.save(item2);
+
         orderRepository.save(order);
 
         //Then
         productRepository.delete(product);
         productRepository.delete(product1);
-        order.getProducts().clear();
+        order.getItems().clear();
 
         assertTrue(orderRepository.existsById(order.getOrderId()));
         assertFalse(productRepository.existsById(product.getId()));

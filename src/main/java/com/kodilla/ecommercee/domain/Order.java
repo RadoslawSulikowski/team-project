@@ -18,6 +18,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ORDER_ID")
     private Long orderId;
 
     @ManyToOne
@@ -25,10 +26,10 @@ public class Order {
     private User user;
 
     @OneToMany(
-            targetEntity = Product.class,
+            targetEntity = Item.class,
             mappedBy = "order",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private List<Product> products = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 }
 
