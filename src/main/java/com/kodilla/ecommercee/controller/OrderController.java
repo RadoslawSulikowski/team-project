@@ -17,13 +17,13 @@ public class OrderController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getOrder")
     public OrderDto getOrder(@RequestParam Long orderId) {
-        return new OrderDto(1L, new ArrayList<>());
+        return new OrderDto(1L, 1L, new ArrayList<>());
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createOrder")
     ///before final implementation change to void
     public String createOrder(@RequestBody OrderDto orderDto) {
-        return "Order created correctly: \nid: " + orderDto.getId() + "\nproducts: " + orderDto.getProducts();
+        return "Order created correctly: \nid: " + orderDto.getId() + "\nproducts: " + orderDto.getItems();
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateOrder")
