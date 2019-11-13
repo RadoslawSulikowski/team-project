@@ -10,6 +10,8 @@ import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.ItemRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import java.util.List;
 
 @Service
 public class CartService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(CartService.class);
+
     @Autowired
     CartRepository cartRepository;
     @Autowired
@@ -50,6 +54,7 @@ public class CartService {
                 item.setCart(cartRepository.findById(cartId).get());
                 productRepository.findById(productId).get().getItems().add(item);
                 cartRepository.findById(cartId).get().getItems().add(item);
+                itemRepository.save(item);
             } else {
                 throw new ProductNotFoundException();
             }
@@ -65,8 +70,9 @@ public class CartService {
                 Item item = itemRepository.findById(itemId).get();
                 if (cart.getItems().contains(item)) {
                     cart.getItems().remove(item);
+                    itemRepository.deleteById(itemId);
                 } else {
-                    System.out.println("Cart ID: " + cart.getCartId() + " does not contain Item ID: " + item.getId());
+                    LOGGER.warn("Cart ID: " + cart.getCartId() + " does not contain Item ID: " + item.getId());
                 }
             } else {
                 throw new ItemNotFoundException();
