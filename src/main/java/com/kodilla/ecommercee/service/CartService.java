@@ -47,6 +47,8 @@ public class CartService {
         if (cartRepository.findById(cartId).isPresent()) {
             if (productRepository.findById(productId).isPresent()) {
                 Item item = new Item(quantity, productRepository.findById(productId).get());
+                item.setCart(cartRepository.findById(cartId).get());
+                productRepository.findById(productId).get().getItems().add(item);
                 cartRepository.findById(cartId).get().getItems().add(item);
             } else {
                 throw new ProductNotFoundException();
