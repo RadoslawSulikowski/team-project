@@ -35,15 +35,22 @@ public class CartService {
         if (cartRepository.findById(cartId).isPresent()) {
             return cartRepository.findById(cartId).get().getItems();
         } else {
+            LOGGER.error("No cart with ID: " + cartId + " found");
             throw new CartNotFoundException();
         }
     }
 
     public Cart getCart(final Long cartId) throws CartNotFoundException{
-        return cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
+        if (cartRepository.findById(cartId).isPresent()) {
+            return cartRepository.findById(cartId).get();
+        } else {
+            LOGGER.error("No cart with ID: " + cartId + " found");
+            throw new CartNotFoundException();
+        }
     }
 
     public Cart save(final Cart cart) {
+        LOGGER.info("Successfully saved the cart");
         return cartRepository.save(cart);
     }
 
@@ -55,10 +62,13 @@ public class CartService {
                 productRepository.findById(productId).get().getItems().add(item);
                 cartRepository.findById(cartId).get().getItems().add(item);
                 itemRepository.save(item);
+                LOGGER.info("Successfully added new product to cart with ID: " + cartId);
             } else {
+                LOGGER.error("No product with ID: " + productId + " found");
                 throw new ProductNotFoundException();
             }
         } else {
+            LOGGER.error("No cart with ID: " + cartId + " found");
             throw new CartNotFoundException();
         }
     }
@@ -72,13 +82,16 @@ public class CartService {
                     cart.getItems().remove(item);
                     productRepository.findById(item.getProduct().getId()).get().getItems().remove(item);
                     itemRepository.deleteById(itemId);
+                    LOGGER.info("Successfully deleted item with ID: " + itemId + " from cart");
                 } else {
                     LOGGER.warn("Cart ID: " + cart.getCartId() + " does not contain Item ID: " + item.getId());
                 }
             } else {
+                LOGGER.error("No item with ID: " + itemId + " found");
                 throw new ItemNotFoundException();
             }
         } else {
+            LOGGER.error("No cart with ID: " + cartId + " found");
             throw new CartNotFoundException();
         }
     }
@@ -86,7 +99,9 @@ public class CartService {
     public void deleteCart(final Long cartId) throws CartNotFoundException {
         if (cartRepository.findById(cartId).isPresent()) {
             cartRepository.deleteById(cartId);
+            LOGGER.info("Successfully deleted cart with ID: " + cartId);
         } else {
+            LOGGER.error("No cart with ID: " + cartId + " found");
             throw new CartNotFoundException();
         }
     }
@@ -98,7 +113,9 @@ public class CartService {
             order.setItems(cartRepository.findById(cartId).get().getItems());
             cartRepository.findById(cartId).get().setItems(new ArrayList<>());
             orderRepository.save(order);
+            LOGGER.info("Successfully created order with ID: " + order.getOrderId());
         } else {
+            LOGGER.error("No cart with ID: " + cartId + " found");
             throw new CartNotFoundException();
         }
     }
