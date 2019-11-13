@@ -20,6 +20,7 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "CART_ID")
     private Long cartId;
 
     @OneToMany(
@@ -27,7 +28,7 @@ public class Cart {
             mappedBy = "cart",
             cascade = ALL,
             fetch = FetchType.LAZY)
-    private List<Product> products = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
     @OneToOne(cascade = {PERSIST, REFRESH, MERGE}, fetch = FetchType.EAGER)
     private User user;

@@ -42,9 +42,13 @@ public class Product {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false)
-    private Item item;
+    @OneToMany(
+            targetEntity = Item.class,
+            mappedBy = "product",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Item> items = new ArrayList<>();
 
     public Product(@NotNull String name, @NotNull String description, @NotNull BigDecimal price) {
         this.name = name;

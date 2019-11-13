@@ -138,8 +138,8 @@ public class OrderEntityTestSuite {
         item1.setOrder(order);
         item2.setOrder(order);
 
-        product1.setItem(item1);
-        product2.setItem(item2);
+        product1.getItems().add(item1);
+        product2.getItems().add(item2);
 
         order.getItems().add(item1);
         order.getItems().add(item2);
