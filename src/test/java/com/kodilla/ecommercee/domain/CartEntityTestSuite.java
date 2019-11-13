@@ -98,7 +98,7 @@ public class CartEntityTestSuite {
         cartRepository.save(cart);
 
         //Then
-        Assert.assertFalse(productsList.isEmpty());
+        Assert.assertTrue(productsList.add(product));
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
@@ -115,10 +115,10 @@ public class CartEntityTestSuite {
 
         //When
         cartRepository.save(cart);
-        productsList.remove(product.getId());
+        productRepository.deleteById(product.getId());
 
         //Then
-        Assert.assertTrue(productRepository.existsById(product.getId()));
+        Assert.assertTrue(cartRepository.existsById(cart.getCartId()));
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
