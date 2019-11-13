@@ -4,16 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class ProductDto {
-
+public class ItemDto {
     private Long id;
-    private String name;
-    private String description;
-    private BigDecimal price;
-    private Long groupId;
+    private double quantity;
+    private Long productId;
 }

@@ -1,53 +1,35 @@
 package com.kodilla.ecommercee.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity(name = "ORDERS")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ORDER_ID")
     private Long orderId;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @OneToMany(
-            targetEntity = Product.class,
+            targetEntity = Item.class,
             mappedBy = "order",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private List<Product> products = new ArrayList<>();
-
-
-    public Order() {
-    }
-
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public List<Product> getProduct() {
-        return products;
-    }
-
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setProduct(List<Product> products) {
-        this.products = products;
-    }
+            fetch = FetchType.LAZY)
+    private List<Item> items = new ArrayList<>();
 }
+
