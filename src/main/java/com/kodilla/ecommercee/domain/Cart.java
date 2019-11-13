@@ -24,7 +24,7 @@ public class Cart {
     private Long cartId;
 
     @OneToMany(
-            targetEntity = Product.class,
+            targetEntity = Item.class,
             mappedBy = "cart",
             cascade = ALL,
             fetch = FetchType.LAZY)
