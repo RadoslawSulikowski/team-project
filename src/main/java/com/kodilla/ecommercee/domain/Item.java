@@ -43,4 +43,9 @@ public class Item {
         this.quantity = quantity;
         this.product = product;
     }
+
+    public Item(double quantity, Product product) {
+        this.quantity = quantity;
+        this.product = product;
+    }
 }
