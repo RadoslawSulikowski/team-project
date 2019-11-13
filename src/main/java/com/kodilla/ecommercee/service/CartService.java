@@ -70,6 +70,7 @@ public class CartService {
                 Item item = itemRepository.findById(itemId).get();
                 if (cart.getItems().contains(item)) {
                     cart.getItems().remove(item);
+                    productRepository.findById(item.getProduct().getId()).get().getItems().remove(item);
                     itemRepository.deleteById(itemId);
                 } else {
                     LOGGER.warn("Cart ID: " + cart.getCartId() + " does not contain Item ID: " + item.getId());
