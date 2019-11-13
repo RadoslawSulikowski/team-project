@@ -34,8 +34,7 @@ public class Order {
             targetEntity = Item.class,
             mappedBy = "order",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
+            fetch = FetchType.LAZY)
     private List<Item> items = new ArrayList<>();
 
 }

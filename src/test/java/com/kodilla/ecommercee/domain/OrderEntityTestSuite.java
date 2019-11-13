@@ -129,11 +129,10 @@ public class OrderEntityTestSuite {
 
         item1.setProduct(product1);
         item1.setQuantity(3.0);
-        item1.setProduct(product1);
 
         item2.setProduct(product2);
         item2.setQuantity(2.0);
-        item2.setProduct(product2);
+
 
         item1.setOrder(order);
         item2.setOrder(order);

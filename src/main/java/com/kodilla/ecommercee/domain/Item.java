@@ -31,12 +31,12 @@ public class Item {
     private Product product;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "ORDER_ID")
-    private Order order;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "CART_ID")
     private Cart cart;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "ORDER_ID")
+    private Order order;
 
     public Item(Long id, double quantity, Product product) {
         this.id = id;

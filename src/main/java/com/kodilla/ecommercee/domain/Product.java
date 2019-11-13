@@ -33,7 +33,6 @@ public class Product {
     @NotNull
     private BigDecimal price;
 
-
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
