@@ -1,7 +1,7 @@
 package com.kodilla.ecommercee.domain;
 
 import com.kodilla.ecommercee.repository.CartRepository;
-import com.kodilla.ecommercee.repository.ProductRepository;
+import com.kodilla.ecommercee.repository.ItemRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,7 @@ public class CartEntityTestSuite {
     @Autowired
     private CartRepository cartRepository;
     @Autowired
-    private ProductRepository productRepository;
+    private ItemRepository itemRepository;
 
 
     @Test
@@ -41,21 +41,21 @@ public class CartEntityTestSuite {
     }
 
     @Test
-    public void testDeleteProductFromCart() {
+    public void testDeleteItemFromCart() {
         //Given
         Cart cart = new Cart();
-        Product product = new Product();
-        List<Product> productsList = cart.getProducts();
-        productsList.add(product);
+        Item item = new Item();
+        List<Item> itemsList = cart.getItems();
+        itemsList.add(item);
 
-        cart.setProducts(productsList);
+        cart.setItems(itemsList);
 
         //When
         cartRepository.save(cart);
 
         //Then
-        productsList.remove(product.getId());
-        Assert.assertFalse(productsList.isEmpty());
+        itemsList.remove(item.getId());
+        Assert.assertFalse(itemsList.isEmpty());
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
@@ -63,21 +63,21 @@ public class CartEntityTestSuite {
     }
 
     @Test
-    public void testDeleteProductFromRepository() {
+    public void testDeleteItemFromRepository() {
         //Given
         Cart cart = new Cart();
-        Product product = new Product();
-        List<Product> productsList = cart.getProducts();
-        productsList.add(product);
+        Item item = new Item();
+        List<Item> itemsList = cart.getItems();
+        itemsList.add(item);
 
-        cart.setProducts(productsList);
+        cart.setItems(itemsList);
 
         //When
         cartRepository.save(cart);
 
         //Then
-        productRepository.deleteById(product.getId());
-        Assert.assertTrue(productRepository.existsById(product.getId()));
+        itemRepository.deleteById(item.getId());
+        Assert.assertTrue(itemRepository.existsById(item.getId()));
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
@@ -88,17 +88,17 @@ public class CartEntityTestSuite {
     public void testProductIntoCart() {
         //Given
         Cart cart = new Cart();
-        Product product = new Product();
-        List<Product> productsList = cart.getProducts();
-        productsList.add(product);
+        Item item = new Item();
+        List<Item> itemsList = cart.getItems();
+        itemsList.add(item);
 
-        cart.setProducts(productsList);
+        cart.setItems(itemsList);
 
         //When
         cartRepository.save(cart);
 
         //Then
-        Assert.assertTrue(productsList.add(product));
+        Assert.assertTrue(itemsList.add(item));
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
@@ -109,13 +109,13 @@ public class CartEntityTestSuite {
     public void testCartRemainsAfterProductDeletion() {
         //Given
         Cart cart = new Cart();
-        Product product = new Product();
-        List<Product> productsList = cart.getProducts();
-        productsList.add(product);
+        Item item = new Item();
+        List<Item> itemsList = cart.getItems();
+        itemsList.add(item);
 
         //When
         cartRepository.save(cart);
-        productRepository.deleteById(product.getId());
+        itemRepository.deleteById(item.getId());
 
         //Then
         Assert.assertTrue(cartRepository.existsById(cart.getCartId()));
