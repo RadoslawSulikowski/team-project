@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class GroupMapper {
@@ -21,8 +22,10 @@ public class GroupMapper {
     ProductMapper productMapper;
 
     public GroupDto mapToGroupDto(final Group group) {
-        List<ProductDto> productDtoList = productMapper.mapToProductDtoList(group.getProducts());
-        return new GroupDto(group.getId(), group.getName(), productDtoList);
+        return new GroupDto(
+                group.getId(),
+                group.getName(),
+                productMapper.mapToProductDtoList(group.getProducts()));
     }
 
     public Group mapToGroup(final GroupDto groupDto) {
@@ -35,6 +38,12 @@ public class GroupMapper {
             LOGGER.error("Empty ArrayList has been set as products.", e);
         }
         return new Group(groupDto.getId(), groupDto.getName(), products);
+    }
+
+    public List<GroupDto> mapToGroupDtoList(final List<Group> groupList){
+        return groupList.stream()
+                .map(this::mapToGroupDto)
+                .collect(Collectors.toList());
     }
 
 }

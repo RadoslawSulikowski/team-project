@@ -1,6 +1,9 @@
 package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.domain.GroupDto;
+import com.kodilla.ecommercee.mapper.GroupMapper;
+import com.kodilla.ecommercee.service.GroupService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,9 +14,15 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/v1/group")
 public class GroupController {
+    @Autowired
+    GroupService groupService;
+
+    @Autowired
+    GroupMapper groupMapper;
+
     @RequestMapping(method = RequestMethod.GET, value = "getGroups")
     public List<GroupDto> getGroups(){
-        return new ArrayList<>();
+        return groupMapper.mapToGroupDtoList(groupService.getAllGroups());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getGroup")
