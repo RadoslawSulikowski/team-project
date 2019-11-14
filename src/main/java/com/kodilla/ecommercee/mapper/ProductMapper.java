@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee.mapper;
 
+import com.kodilla.ecommercee.domain.ItemDto;
 import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.domain.ProductDto;
 import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
@@ -15,11 +16,13 @@ import java.util.stream.Collectors;
 @Component
 public class ProductMapper {
     @Autowired
+    ItemMapper itemMapper;
+    @Autowired
     ProductRepository productRepository;
 
     public List<ProductDto> mapToProductDtoList(final List<Product> products) {
         return products.stream()
-                .map(n -> new ProductDto(n.getId(), n.getName(), n.getDescription(), n.getPrice(), n.getGroup().getId()))
+                .map(n -> new ProductDto(n.getId(), n.getName(), n.getDescription(), n.getPrice(), n.getGroup().getId(), itemMapper.mapToItemsDtoList(n.getItems())))
                 .collect(Collectors.toList());
     }
 
