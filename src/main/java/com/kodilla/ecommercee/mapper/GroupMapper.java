@@ -31,7 +31,7 @@ public class GroupMapper {
     public Group mapToGroup(final GroupDto groupDto) {
         LOGGER.info("Mapping GroupDto to Group...");
         List<Product> products = new ArrayList<>();
-        try{
+        try {
             products = productMapper.mapToProductList(groupDto.getProducts());
             LOGGER.info("Mapping correct");
         } catch(ProductNotFoundException e) {
@@ -40,7 +40,7 @@ public class GroupMapper {
         return new Group(groupDto.getId(), groupDto.getName(), products);
     }
 
-    public List<GroupDto> mapToGroupDtoList(final List<Group> groupList){
+    public List<GroupDto> mapToGroupDtoList(final List<Group> groupList) {
         return groupList.stream()
                 .map(this::mapToGroupDto)
                 .collect(Collectors.toList());

@@ -22,7 +22,4 @@ public interface GroupRepository extends CrudRepository<Group, Long> {
 
     @Override
     void deleteById(Long id);
-
-    @Override
-    long count();
 }
