@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,12 +24,15 @@ public class Product {
     @Column(name = "PRODUCT_ID", unique = true)
     private Long id;
 
+    @NotNull
     @Column(name = "NAME")
     private String name;
 
+    @NotNull
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @NotNull
     @Column(name = "PRICE")
     private BigDecimal price;
 
@@ -52,7 +54,8 @@ public class Product {
         this.price = price;
     }
 
-    public Product(String name, String description, BigDecimal price, Group group) {
+    public Product(Long id, String name, String description, BigDecimal price, Group group) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;

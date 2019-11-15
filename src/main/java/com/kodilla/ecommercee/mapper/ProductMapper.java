@@ -19,9 +19,11 @@ public class ProductMapper {
 
     public Product mapToProduct(final ProductDto productDto) {
         return new Product(
+                productDto.getId(),
                 productDto.getName(),
                 productDto.getDescription(),
-                productDto.getPrice());
+                productDto.getPrice(),
+                productDto.getGroup());
     }
 
     public ProductDto mapToProductDto(final Product product) {
@@ -30,12 +32,12 @@ public class ProductMapper {
                 product.getName(),
                 product.getDescription(),
                 product.getPrice(),
-                product.getGroup().getId());
+                product.getGroup());
     }
 
     public List<ProductDto> mapToProductDtoList(final List<Product> productList) {
         return productList.stream()
-                .map(n -> new ProductDto(n.getId(), n.getName(), n.getDescription(), n.getPrice(), n.getGroup().getId()))
+                .map(n -> new ProductDto(n.getId(), n.getName(), n.getDescription(), n.getPrice(), n.getGroup()))
                 .collect(Collectors.toList());
     }
     public List<Product> mapToProductList(final List<ProductDto> productDtos) throws ProductNotFoundException {

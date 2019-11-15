@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -24,27 +23,27 @@ public class ProductService {
     }
 
     public Product getProductById(final Long id) throws ProductNotFoundException {
-            return repository.findById(id).orElseThrow(ProductNotFoundException::new);
+        return repository.findById(id).orElseThrow(ProductNotFoundException::new);
     }
 
-    public Product saveProduct(Product product){
+    public Product saveProduct(Product product) {
         return repository.save(product);
     }
 
-    public Product updateProduct(Product product) throws ProductNotFoundException{
-        if(repository.existsById(product.getId())){
+    public Product updateProduct(Product product) throws ProductNotFoundException {
+        if (repository.existsById(product.getId())) {
             return saveProduct(product);
         } else {
-            LOGGER.info("Product id: " + product.getId() + " not found.");
+            LOGGER.error("Product id: " + product.getId() + " not found.");
             throw new ProductNotFoundException();
         }
     }
 
-    public void deleteRepository(final Long id) throws ProductNotFoundException {
+    public void deleteProduct(final Long id) throws ProductNotFoundException {
         if (repository.existsById(id)) {
             repository.deleteById(id);
-        }else {
-            LOGGER.info("Product id: " + id + " not found.");
+        } else {
+            LOGGER.error("Product id: " + id + " not found.");
             throw new ProductNotFoundException();
         }
     }
