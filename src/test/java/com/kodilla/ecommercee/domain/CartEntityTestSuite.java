@@ -54,8 +54,8 @@ public class CartEntityTestSuite {
         cartRepository.save(cart);
 
         //Then
-        itemsList.remove(item.getId());
-        Assert.assertFalse(itemsList.isEmpty());
+        itemsList.clear();
+        Assert.assertTrue(itemsList.isEmpty());
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
@@ -77,7 +77,8 @@ public class CartEntityTestSuite {
 
         //Then
         itemRepository.deleteById(item.getId());
-        Assert.assertTrue(itemRepository.existsById(item.getId()));
+        itemsList.clear();
+        Assert.assertFalse(itemRepository.existsById(item.getId()));
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
@@ -85,7 +86,7 @@ public class CartEntityTestSuite {
     }
 
     @Test
-    public void testProductIntoCart() {
+    public void testItemIntoCart() {
         //Given
         Cart cart = new Cart();
         Item item = new Item();
@@ -98,15 +99,16 @@ public class CartEntityTestSuite {
         cartRepository.save(cart);
 
         //Then
-        Assert.assertTrue(itemsList.add(item));
+        Assert.assertTrue(itemsList.contains(item));
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
+        itemsList.clear();
 
     }
 
     @Test
-    public void testCartRemainsAfterProductDeletion() {
+    public void testCartRemainsAfterItemDeletion() {
         //Given
         Cart cart = new Cart();
         Item item = new Item();
@@ -118,7 +120,9 @@ public class CartEntityTestSuite {
         itemRepository.deleteById(item.getId());
 
         //Then
+        itemsList.clear();
         Assert.assertTrue(cartRepository.existsById(cart.getCartId()));
+        Assert.assertFalse(itemRepository.existsById(item.getId()));
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
