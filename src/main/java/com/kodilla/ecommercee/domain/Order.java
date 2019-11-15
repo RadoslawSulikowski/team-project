@@ -1,3 +1,4 @@
+
 package com.kodilla.ecommercee.domain;
 
 import lombok.AllArgsConstructor;
@@ -13,6 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@NamedQuery(
+        name = "Order.retrieveOrdersByUserId",
+        query = "FROM ORDERS WHERE user_id = :USER_ID"
+)
 @Entity(name = "ORDERS")
 public class Order {
 
@@ -31,5 +36,9 @@ public class Order {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<Item> items = new ArrayList<>();
+
 }
+
+
+
 

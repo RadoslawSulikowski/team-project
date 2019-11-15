@@ -19,6 +19,7 @@ import static javax.persistence.CascadeType.*;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "CART_ID")
     private Long cartId;
 
     @OneToMany(
