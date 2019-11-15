@@ -17,5 +17,4 @@ public class ProductDto {
     private String description;
     private BigDecimal price;
     private Long groupId;
-    private List<ItemDto> items;
 }

@@ -34,9 +34,6 @@ public class Product {
     @Column(name = "PRICE")
     private BigDecimal price;
 
-    @Column(name = "GROUP_ID")
-    private Long groupId;
-
     @ManyToOne
     @JoinColumn(name = "GROUP_ID")
     private Group group;
@@ -49,10 +46,16 @@ public class Product {
     )
     private List<Item> items = new ArrayList<>();
 
-    public Product(String name, String description, BigDecimal price, Long groupId) {
+    public Product(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.groupId = groupId;
+    }
+
+    public Product(String name, String description, BigDecimal price, Group group) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.group = group;
     }
 }
