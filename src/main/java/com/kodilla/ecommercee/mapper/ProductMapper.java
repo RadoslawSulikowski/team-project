@@ -16,11 +16,13 @@ import java.util.stream.Collectors;
 public class ProductMapper {
    
     @Autowired
+    ItemMapper itemMapper;
+    @Autowired
     ProductRepository productRepository;
 
     public List<ProductDto> mapToProductDtoList(final List<Product> products) {
         return products.stream()
-                .map(n -> new ProductDto(n.getId(), n.getName(), n.getDescription(), n.getPrice(), n.getGroup().getId()))
+                .map(n -> new ProductDto(n.getId(), n.getName(), n.getDescription(), n.getPrice(), n.getGroup().getId(), itemMapper.mapToItemsDtoList(n.getItems())))
                 .collect(Collectors.toList());
     }
 
