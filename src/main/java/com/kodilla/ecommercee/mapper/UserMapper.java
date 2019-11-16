@@ -43,13 +43,13 @@ public class UserMapper {
     }
 
 
-    public List <UserDto> mapToUserDtoList(final List <User> userList) {
+    public List<UserDto> mapToUserDtoList(final List<User> userList) {
         return userList.stream()
                 .map(n -> new UserDto(n.getId(), n.getUsername(), n.getStatus(), n.getUserKey()))
                 .collect(Collectors.toList());
     }
 
-    public List<User> mapToUserList(final List <UserDto> userDtos) throws UserNotFoundException {
+    public List<User> mapToUserList(final List<UserDto> userDtos) throws UserNotFoundException {
         List<User> users = new ArrayList<>();
         for (UserDto us : userDtos) {
             if (userRepository.findById(us.getId()).isPresent()) {

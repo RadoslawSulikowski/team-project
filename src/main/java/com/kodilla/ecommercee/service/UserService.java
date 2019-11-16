@@ -26,7 +26,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User blockUser(final Long id) throws UserNotFoundException{
+    public User blockUser(final Long id) throws UserNotFoundException {
         if (userRepository.existsById(id)) {
             return userRepository.save(blockUser(id));
         } else {
