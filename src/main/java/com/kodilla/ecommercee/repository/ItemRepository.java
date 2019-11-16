@@ -26,4 +26,8 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
 
     @Override
     long count();
+
 }
+
+}
+

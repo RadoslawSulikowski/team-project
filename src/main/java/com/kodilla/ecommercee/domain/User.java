@@ -33,12 +33,55 @@ public class User {
             fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
 
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cart cart = new Cart();
+
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Cart cart = new Cart();
+
+    public User(String username, String status, Long userKey) {
+        this.username = username;
+        this.status = status;
+        this.userKey = userKey;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public Long getUserKey() {
+        return userKey;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 
     public User(Long id, String username, String status, Long userKey) {
         this.username = username;
         this.status = status;
         this.userKey = userKey;
     }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
 }
