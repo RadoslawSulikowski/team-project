@@ -34,13 +34,12 @@ public class User {
     private List<Order> orders = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Long cartId;
+    private Cart cart = new Cart();
 
-    public User(String username, String status, Long userKey, Long cartId) {
+    public User(String username, String status, Long userKey) {
         this.username = username;
         this.status = status;
         this.userKey = userKey;
-        this.cartId = cartId;
     }
 
 
@@ -64,9 +63,6 @@ public class User {
         return orders;
     }
 
-    public Long getCartId() {
-        return cartId;
-    }
 
     public void setId(Long id) {
         this.id = id;
