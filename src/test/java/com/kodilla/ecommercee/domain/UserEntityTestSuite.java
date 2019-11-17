@@ -141,9 +141,11 @@ public class UserEntityTestSuite {
 
         //When
         cartRepository.deleteById(cartId);
+        user.setCart(null);
 
         //Then
         assertTrue(userRepository.existsById(userId));
+        assertFalse(cartRepository.existsById(cartId));
 
         //Clean up DB
         userRepository.deleteById(userId);
@@ -167,7 +169,6 @@ public class UserEntityTestSuite {
         assertTrue(orderRepository.existsById(orderId));
 
         //Clean up DB
-        orderRepository.deleteById(orderId);
         userRepository.deleteById(userId);
     }
 
@@ -184,10 +185,14 @@ public class UserEntityTestSuite {
         long orderId = user.getOrders().get(orderIndex).getOrderId();
 
         //When
+        if(orderRepository.findById(orderId).isPresent()) {
+            user.getOrders().remove(orderRepository.findById(orderId).get());
+        }
         orderRepository.deleteById(orderId);
 
         //Then
         assertTrue(userRepository.existsById(userId));
+        assertFalse(orderRepository.existsById(orderId));
 
         //Clean up DB
         userRepository.deleteById(userId);
@@ -207,35 +212,12 @@ public class UserEntityTestSuite {
 
         //When;
         assertTrue(orderRepository.existsById(orderId));
-        user.getOrders().remove(orderRepository.findById(orderId).get());
-        userRepository.save(user);
+        if(orderRepository.findById(orderId).isPresent()) {
+            user.getOrders().remove(orderRepository.findById(orderId).get());
+        }
 
         //Then
         assertFalse(orderRepository.existsById(orderId));
-
-        //Clean up DB
-        userRepository.deleteById(userId);
-    }
-
-    @Test
-    public void shouldRemoveOrderFromUserOrdersAfterDeletionOrderFromRepo() {
-        //Given
-        User user = new User(TEST_USERNAME, TEST_USER_STATUS, TEST_USER_KEY);
-        Order order = new Order();
-        userRepository.save(user);
-        long userId = user.getId();
-        user.getOrders().add(order);
-        int orderIndex = user.getOrders().indexOf(order);
-        userRepository.save(user);
-        long orderId = user.getOrders().get(orderIndex).getOrderId();
-
-        //When
-        assertTrue(orderRepository.existsById(orderId));
-        orderRepository.delete(orderRepository.findById(orderId).get());
-        assertFalse(orderRepository.existsById(orderId));
-
-        //Then
-        assertFalse(userRepository.findById(userId).get().getOrders().contains(order));
 
         //Clean up DB
         userRepository.deleteById(userId);
