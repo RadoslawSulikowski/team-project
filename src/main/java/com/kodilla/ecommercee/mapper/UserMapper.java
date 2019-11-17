@@ -1,11 +1,13 @@
 package com.kodilla.ecommercee.mapper;
 
 import com.kodilla.ecommercee.domain.*;
-import com.kodilla.ecommercee.exceptions.CartNotFoundException;
+import com.kodilla.ecommercee.exceptions.OrderNotFoundException;
 import com.kodilla.ecommercee.exceptions.UserNotFoundException;
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +25,12 @@ public class UserMapper {
     CartRepository cartRepository;
 
     @Autowired
+    OrderMapper orderMapper;
+
+    @Autowired
+    OrderRepository orderRepository;
+
+    @Autowired
     UserRepository userRepository;
 
     public UserDto mapToUserDto(final User user) {
@@ -30,22 +38,26 @@ public class UserMapper {
                 user.getId(),
                 user.getUsername(),
                 user.getStatus(),
-                user.getUserKey());
+                user.getUserKey(),
+                orderMapper.mapToOrderDtoList(user.getOrders()),
+                user.getCartId());
 
     }
 
     public User mapToUser(final UserDto userDto) {
-        return new User(
-                userDto.getId(),
-                userDto.getUsername(),
-                userDto.getStatus(),
-                userDto.getUserKey());
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setUsername(userDto.getUsername());
+        user.setStatus(userDto.getStatus());
+        user.setUserKey(userDto.getUserKey());
+
+        return user;
     }
 
 
     public List<UserDto> mapToUserDtoList(final List<User> userList) {
         return userList.stream()
-                .map(n -> new UserDto(n.getId(), n.getUsername(), n.getStatus(), n.getUserKey()))
+                .map(this::mapToUserDto)
                 .collect(Collectors.toList());
     }
 
