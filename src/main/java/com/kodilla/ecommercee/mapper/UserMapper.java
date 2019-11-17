@@ -40,7 +40,7 @@ public class UserMapper {
                 user.getStatus(),
                 user.getUserKey(),
                 orderMapper.mapToOrderDtoList(user.getOrders()),
-                user.getCartId());
+                user.getCart());
 
     }
 
