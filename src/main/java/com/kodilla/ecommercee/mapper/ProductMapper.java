@@ -3,23 +3,26 @@ package com.kodilla.ecommercee.mapper;
 import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.domain.ProductDto;
 import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
+
 import com.kodilla.ecommercee.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class ProductMapper {
+
+    @Autowired
+    ItemMapper itemMapper;
     @Autowired
     ProductRepository productRepository;
 
     public List<ProductDto> mapToProductDtoList(final List<Product> products) {
         return products.stream()
-                .map(n -> new ProductDto(n.getId(), n.getName(), n.getDescription(), n.getPrice(), n.getGroup().getId()))
+                .map(n -> new ProductDto(n.getId(), n.getName(), n.getDescription(), n.getPrice(), n.getGroup().getId(), itemMapper.mapToItemsDtoList(n.getItems())))
                 .collect(Collectors.toList());
     }
 
