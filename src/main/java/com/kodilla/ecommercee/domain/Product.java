@@ -36,9 +36,6 @@ public class Product {
     @Column(name = "PRICE")
     private BigDecimal price;
 
-    @Column(name = "PRODUCT_GROUP_ID")
-    private Long groupId;
-
     @ManyToOne
     @JoinColumn(name = "GROUP_ID")
     private Group group;
@@ -57,11 +54,11 @@ public class Product {
         this.price = price;
     }
 
-    public Product(@NotNull Long id, @NotNull String name, @NotNull String description, @NotNull BigDecimal price, Long groupId) {
+    public Product(@NotNull Long id, @NotNull String name, @NotNull String description, @NotNull BigDecimal price, Group group) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.groupId = groupId;
+        this.group = group;
     }
 }

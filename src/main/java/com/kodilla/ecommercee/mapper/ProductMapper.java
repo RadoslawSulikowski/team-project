@@ -2,7 +2,9 @@ package com.kodilla.ecommercee.mapper;
 
 import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.domain.ProductDto;
+import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
 import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
+import com.kodilla.ecommercee.repository.GroupRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,13 +19,16 @@ public class ProductMapper {
     @Autowired
     ProductRepository productRepository;
 
-    public Product mapToProduct(final ProductDto productDto) {
+    @Autowired
+    GroupRepository groupRepository;
+
+    public Product mapToProduct(final ProductDto productDto) throws GroupNotFoundException {
         return new Product(
                 productDto.getId(),
                 productDto.getName(),
                 productDto.getDescription(),
                 productDto.getPrice(),
-                productDto.getGroupId());
+                groupRepository.findById(productDto.getGroupId()).orElseThrow(GroupNotFoundException::new));
     }
 
     public ProductDto mapToProductDto(final Product product) {
