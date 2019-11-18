@@ -19,20 +19,22 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User blockUser(final Long id){
-            userRepository.findById(id).isPresent();
-            User user = new User();
-            user.setStatus(userRepository.findById(id).get().getStatus());
-            return userRepository.save(user);
+    public User blockUser(final Long id) {
+        if (userRepository.existsById(id)) {
+            User user = userRepository.findById(id).get();
+            user.setStatus("zablokowany");
+        }
+        return userRepository.save(blockUser(id));
 
     }
 
-    private Long generateUserKey() {
-        long leftLimit = 1001L;
-        long rightLimit = 10001L;
+    private Long generateUserKey(){
+        long leftLimit = 100000000L;
+        long rightLimit = 1000000000L;
         return leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
     }
-    public void oneHourUserKey(User user) {
+
+    private void resetUserKeyAfterOneHour(User user) {
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
@@ -40,11 +42,20 @@ public class UserService {
                         user.setUserKey(null);
                     }
                 },
-                1234567
+                3600000
         );
-        Long userKey = generateUserKey();
-        user.setUserKey(userKey);
-        userRepository.save(user);
-        oneHourUserKey(user);
+    }
+
+    public Long oneHourUserKey(final Long user) {
+        if (userRepository.existsById(user.getId())) {
+            userRepository.save(user);
+            Long userKey = generateUserKey();
+            user.setUserKey(userKey);
+            userRepository.save(user);
+            resetUserKeyAfterOneHour(user);
+            return userKey;
+
+        }
+        return null;
     }
 }

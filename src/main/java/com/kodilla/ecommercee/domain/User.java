@@ -36,10 +36,9 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cart cart = new Cart();
 
-    public User(String username, String status, Long userKey) {
+    public User(String username, String status) {
         this.username = username;
         this.status = status;
-        this.userKey = userKey;
     }
 
 }

@@ -47,6 +47,7 @@ public class UserMapper {
         user.setUsername(userDto.getUsername());
         user.setStatus(userDto.getStatus());
         user.setUserKey(userDto.getUserKey());
+        user.setOrders(user.getOrders());
         orderMapper.mapToOrderDtoList(user.getOrders());
         user.setCart(userDto.getCart());
         return user;
