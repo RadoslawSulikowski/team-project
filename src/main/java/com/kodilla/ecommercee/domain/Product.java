@@ -25,16 +25,19 @@ public class Product {
     private Long id;
 
     @NotNull
+    @Column(name = "NAME")
     private String name;
 
     @NotNull
+    @Column(name = "DESCRIPTION")
     private String description;
 
     @NotNull
+    @Column(name = "PRICE")
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name = "GROUP_ID")
     private Group group;
 
     @OneToMany(
@@ -45,9 +48,17 @@ public class Product {
     )
     private List<Item> items = new ArrayList<>();
 
-    public Product(@NotNull String name, @NotNull String description, @NotNull BigDecimal price) {
+    public Product(@NotNull String name,@NotNull String description,@NotNull BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public Product(@NotNull Long id, @NotNull String name, @NotNull String description, @NotNull BigDecimal price, Group group) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.group = group;
     }
 }

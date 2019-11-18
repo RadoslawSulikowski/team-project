@@ -45,5 +45,4 @@ public class GroupMapper {
                 .map(this::mapToGroupDto)
                 .collect(Collectors.toList());
     }
-
 }
