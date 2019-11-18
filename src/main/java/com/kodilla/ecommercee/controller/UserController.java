@@ -28,19 +28,11 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "blockUser")
     public void blockUser(@RequestParam Long id) {
-        try {
-            userService.blockUser(id);
-        } catch (UserNotFoundException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
+        userService.blockUser(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "oneHourUserKey")
     public void oneHourUserKey(@RequestBody UserDto userDto) {
-        try {
-            userService.oneHourUserKey(userMapper.mapToUser(userDto));
-        } catch (UserNotFoundException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
+        userService.oneHourUserKey(userMapper.mapToUser(userDto));
     }
 }
