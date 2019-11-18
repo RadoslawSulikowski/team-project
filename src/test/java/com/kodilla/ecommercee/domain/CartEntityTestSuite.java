@@ -53,13 +53,13 @@ public class CartEntityTestSuite {
         //When
         cartRepository.save(cart);
         itemsList.clear();
+        itemRepository.deleteById(item.getId());
 
         //Then
         Assert.assertTrue(itemsList.isEmpty());
 
         //CleanUp
         cartRepository.deleteById(cart.getCartId());
-        itemsList.clear();
     }
 
     @Test
