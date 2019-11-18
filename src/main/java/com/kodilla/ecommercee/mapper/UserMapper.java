@@ -1,13 +1,10 @@
 package com.kodilla.ecommercee.mapper;
 
 import com.kodilla.ecommercee.domain.*;
-import com.kodilla.ecommercee.exceptions.OrderNotFoundException;
 import com.kodilla.ecommercee.exceptions.UserNotFoundException;
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -50,7 +47,8 @@ public class UserMapper {
         user.setUsername(userDto.getUsername());
         user.setStatus(userDto.getStatus());
         user.setUserKey(userDto.getUserKey());
-
+        orderMapper.mapToOrderDtoList(user.getOrders());
+        user.setCart(userDto.getCart());
         return user;
     }
 
