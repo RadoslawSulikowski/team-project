@@ -1,23 +1,37 @@
 package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.domain.UserDto;
+import com.kodilla.ecommercee.exceptions.UserNotFoundException;
+import com.kodilla.ecommercee.mapper.UserMapper;
+import com.kodilla.ecommercee.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/user")
 public class UserController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+
+    @Autowired
+    UserService userService;
+    @Autowired
+    UserMapper userMapper;
+
     @RequestMapping(method = RequestMethod.POST, value = "createUser")
-    public String createUser(@RequestBody UserDto userDto) {
-        return "Create new user: " + userDto.getId() + " " + userDto.getUsername();
+    public void createUser(@RequestBody UserDto userDto) {
+        userService.saveUser(userMapper.mapToUser(userDto));
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "blockUser")
-    public String blockUser(@RequestParam String getUsername) {
-        return getUsername + " is blocked";
+    public void blockUser(@RequestParam Long id) throws UserNotFoundException {
+        userService.blockUser(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "oneHourUserKey")
-    public Long oneHourUserKey(@RequestBody UserDto userDto) {
-        return userDto.getUserKey();
+    public Long oneHourUserKey(@RequestBody UserDto userDto) throws UserNotFoundException {
+        return userService.oneHourUserKey(userMapper.mapToUser(userDto));
     }
 }
