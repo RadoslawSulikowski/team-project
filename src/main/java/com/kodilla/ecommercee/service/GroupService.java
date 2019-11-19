@@ -1,7 +1,7 @@
 package com.kodilla.ecommercee.service;
 
-import com.kodilla.ecommercee.controller.ControllerExceptionHandler;
 import com.kodilla.ecommercee.domain.Group;
+import com.kodilla.ecommercee.exceptions.GroupAlreadyExistsException;
 import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
 import com.kodilla.ecommercee.repository.GroupRepository;
 import org.slf4j.Logger;
@@ -33,8 +33,13 @@ public class GroupService {
         }
     }
 
-    public void addGroup(final Group group) {
-        groupRepository.save(group);
+    public void addGroup(final Group group) throws GroupAlreadyExistsException {
+        if(!groupRepository.findById(group.getId()).isPresent()) {
+            groupRepository.save(group);
+        } else {
+            LOGGER.error("Group with id " + group.getId() + " already exists");
+            throw new GroupAlreadyExistsException();
+        }
     }
 
     public Group updateGroup(final Group group) throws GroupNotFoundException {

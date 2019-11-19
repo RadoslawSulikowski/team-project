@@ -1,17 +1,13 @@
 package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.domain.Group;
 import com.kodilla.ecommercee.domain.GroupDto;
-import com.kodilla.ecommercee.exceptions.CartNotFoundException;
+import com.kodilla.ecommercee.exceptions.GroupAlreadyExistsException;
 import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
 import com.kodilla.ecommercee.mapper.GroupMapper;
 import com.kodilla.ecommercee.service.GroupService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -36,7 +32,7 @@ public class GroupController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addGroup", consumes = APPLICATION_JSON_VALUE)
-    public void addGroup(@RequestBody GroupDto groupDto) {
+    public void addGroup(@RequestBody GroupDto groupDto) throws GroupAlreadyExistsException {
         groupService.addGroup(groupMapper.mapToGroup(groupDto));
     }
 

@@ -1,9 +1,6 @@
 package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.exceptions.CartNotFoundException;
-import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
-import com.kodilla.ecommercee.exceptions.OrderNotFoundException;
-import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
+import com.kodilla.ecommercee.exceptions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,6 +15,12 @@ public class ControllerExceptionHandler {
         LOGGER.error("GroupNotFound");
         return "No such group";
     }
+
+//    @ExceptionHandler(GroupAlreadyExistsException.class)
+//    public String groupAlreadyExistExceptionHandler(){
+//        LOGGER.error("Group Already Exist");
+//        return "group exist";
+//    }
 
     @ExceptionHandler(ProductNotFoundException.class)
     public String productNotFoundExceptionHandler(){
