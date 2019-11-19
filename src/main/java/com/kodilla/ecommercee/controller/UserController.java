@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "oneHourUserKey")
-    public void oneHourUserKey(@RequestParam Long id) {
-        userService.oneHourUserKey(id);
+    public void oneHourUserKey(@RequestBody UserDto userDto) {
+        userService.oneHourUserKey(userMapper.mapToUser(userDto));
     }
 }
