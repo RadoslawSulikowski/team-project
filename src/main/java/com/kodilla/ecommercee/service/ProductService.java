@@ -44,7 +44,7 @@ public class ProductService {
             repository.deleteById(id);
         } else {
             LOGGER.error("Product id: " + id + " not found.");
-            throw new ProductNotFoundException();
+            throw new ProductNotFoundException("Product id: " + id + " not found.");
         }
     }
 }

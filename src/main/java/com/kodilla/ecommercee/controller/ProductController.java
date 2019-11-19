@@ -55,11 +55,7 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteProduct")
-    public void deleteProduct(@RequestParam Long id) {
-        try {
+    public void deleteProduct(@RequestParam Long id) throws ProductNotFoundException{
             service.deleteProduct(id);
-        } catch (ProductNotFoundException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
     }
 }

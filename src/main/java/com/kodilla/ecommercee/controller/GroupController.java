@@ -56,11 +56,7 @@ public class GroupController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteGroup")
-    public void deleteGroup(@RequestParam Long id) {
-        try {
-            groupService.deleteGroup(id);
-        } catch(GroupNotFoundException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
+    public void deleteGroup(@RequestParam Long id) throws GroupNotFoundException {
+        groupService.deleteGroup(id);
     }
 }
