@@ -40,8 +40,8 @@ public class UserService {
             resetUserKeyAfterOneHour(user);
             return userKey;
         } else {
-            LOGGER.error(MESSAGE + user.getId());
-            throw new UserNotFoundException(MESSAGE + user.getId());
+            LOGGER.error(MESSAGE + user.getId() + " to generate key.");
+            throw new UserNotFoundException(MESSAGE + user.getId() + " to generate key.");
         }
     }
 

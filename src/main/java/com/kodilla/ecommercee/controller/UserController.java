@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "oneHourUserKey")
-    public void oneHourUserKey(@RequestBody UserDto userDto) throws UserNotFoundException {
-        userService.oneHourUserKey(userMapper.mapToUser(userDto));
+    public Long oneHourUserKey(@RequestBody UserDto userDto) throws UserNotFoundException {
+        return userService.oneHourUserKey(userMapper.mapToUser(userDto));
     }
 }
