@@ -1,6 +1,5 @@
 package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.domain.User;
 import com.kodilla.ecommercee.domain.UserDto;
 import com.kodilla.ecommercee.exceptions.UserNotFoundException;
 import com.kodilla.ecommercee.mapper.UserMapper;
@@ -27,12 +26,12 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "blockUser")
-    public void blockUser(@RequestParam Long id) {
+    public void blockUser(@RequestParam Long id) throws UserNotFoundException {
         userService.blockUser(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "oneHourUserKey")
-    public void oneHourUserKey(@RequestBody UserDto userDto) {
+    public void oneHourUserKey(@RequestBody UserDto userDto) throws UserNotFoundException {
         userService.oneHourUserKey(userMapper.mapToUser(userDto));
     }
 }
