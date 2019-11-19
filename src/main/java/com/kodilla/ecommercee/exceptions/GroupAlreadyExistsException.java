@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Group with given id already exists")
 public class GroupAlreadyExistsException extends Exception{
+
     public GroupAlreadyExistsException(){
         super();
     }

@@ -1,9 +1,6 @@
 package com.kodilla.ecommercee.controller;
 
-
-import com.kodilla.ecommercee.domain.Order;
 import com.kodilla.ecommercee.domain.OrderDto;
-import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
 import com.kodilla.ecommercee.exceptions.OrderNotFoundException;
 import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
 import com.kodilla.ecommercee.exceptions.UserNotFoundException;
@@ -29,7 +26,7 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getUserOrders")
-    public List<OrderDto> getUserOrders(@RequestParam Long userId) throws UserNotFoundException{
+    public List<OrderDto> getUserOrders(@RequestParam Long userId) throws UserNotFoundException {
         return orderMapper.mapToOrderDtoList(orderService.getAllUserOrders(userId));
     }
 
@@ -44,12 +41,12 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateOrder")
-    public OrderDto updateOrder(@RequestBody OrderDto orderDto) throws UserNotFoundException, ProductNotFoundException, OrderNotFoundException{
+    public OrderDto updateOrder(@RequestBody OrderDto orderDto) throws UserNotFoundException, ProductNotFoundException, OrderNotFoundException {
         return orderMapper.mapToOrderDto(orderService.updateOrder(orderMapper.mapToOrder(orderDto)));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteOrder")
     public void deleteOrder(@RequestParam Long orderId) throws OrderNotFoundException {
-            orderService.deleteOrder(orderId);
+        orderService.deleteOrder(orderId);
     }
 }

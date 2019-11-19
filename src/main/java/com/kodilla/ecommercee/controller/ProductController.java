@@ -1,13 +1,10 @@
 package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.domain.ProductDto;
 import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
 import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
 import com.kodilla.ecommercee.mapper.ProductMapper;
 import com.kodilla.ecommercee.service.ProductService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,8 +28,8 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getProduct")
-    public ProductDto getProduct(@RequestParam Long id) throws ProductNotFoundException{
-            return mapper.mapToProductDto(service.getProductById(id));
+    public ProductDto getProduct(@RequestParam Long id) throws ProductNotFoundException {
+        return mapper.mapToProductDto(service.getProductById(id));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createProduct", consumes = APPLICATION_JSON_VALUE)
@@ -41,12 +38,12 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateProduct")
-    public ProductDto updateProduct(@RequestBody ProductDto productDto) throws GroupNotFoundException, ProductNotFoundException{
-            return mapper.mapToProductDto(service.updateProduct(mapper.mapToProduct(productDto)));
+    public ProductDto updateProduct(@RequestBody ProductDto productDto) throws GroupNotFoundException, ProductNotFoundException {
+        return mapper.mapToProductDto(service.updateProduct(mapper.mapToProduct(productDto)));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteProduct")
-    public void deleteProduct(@RequestParam Long id) throws ProductNotFoundException{
-            service.deleteProduct(id);
+    public void deleteProduct(@RequestParam Long id) throws ProductNotFoundException {
+        service.deleteProduct(id);
     }
 }

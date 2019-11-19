@@ -21,7 +21,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User blockUser(final Long id) throws UserNotFoundException{
+    public User blockUser(final Long id) throws UserNotFoundException {
         if (userRepository.findById(id).isPresent()) {
             User user = userRepository.findById(id).get();
             user.setStatus("blocked");
@@ -32,7 +32,7 @@ public class UserService {
         }
     }
 
-    public Long oneHourUserKey(final User user) throws UserNotFoundException{
+    public Long oneHourUserKey(final User user) throws UserNotFoundException {
         if (userRepository.existsById(user.getId())) {
             Long userKey = generateUserKey();
             user.setUserKey(userKey);
@@ -45,7 +45,7 @@ public class UserService {
         }
     }
 
-    private Long generateUserKey(){
+    private Long generateUserKey() {
         long leftLimit = 100000000L;
         long rightLimit = 1000000000L;
         return leftLimit + (long) (Math.random() * (rightLimit - leftLimit));

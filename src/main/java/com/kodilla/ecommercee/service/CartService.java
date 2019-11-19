@@ -31,7 +31,7 @@ public class CartService {
     @Autowired
     ItemRepository itemRepository;
 
-    public List<Item> getItemsFromCart(final Long cartId) throws CartNotFoundException{
+    public List<Item> getItemsFromCart(final Long cartId) throws CartNotFoundException {
         if (cartRepository.findById(cartId).isPresent()) {
             return cartRepository.findById(cartId).get().getItems();
         } else {
@@ -40,7 +40,7 @@ public class CartService {
         }
     }
 
-    public Cart getCart(final Long cartId) throws CartNotFoundException{
+    public Cart getCart(final Long cartId) throws CartNotFoundException {
         if (cartRepository.findById(cartId).isPresent()) {
             return cartRepository.findById(cartId).get();
         } else {

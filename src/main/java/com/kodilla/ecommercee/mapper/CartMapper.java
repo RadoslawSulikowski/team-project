@@ -34,7 +34,7 @@ public class CartMapper {
         cart.setUser(userRepository.findById(cartDto.getUserId()).orElseThrow(UserNotFoundException::new));
         try {
             cart.setItems(itemMapper.mapToItemsList(cartDto.getItems()));
-        } catch (ProductNotFoundException e) {
+        } catch(ProductNotFoundException e) {
             LOGGER.error(e.getMessage());
         }
         return cart;

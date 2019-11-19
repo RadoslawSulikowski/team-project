@@ -34,7 +34,7 @@ public class GroupService {
     }
 
     public void addGroup(final Group group) throws GroupAlreadyExistsException {
-        if(!groupRepository.findById(group.getId()).isPresent()) {
+        if (!groupRepository.findById(group.getId()).isPresent()) {
             groupRepository.save(group);
         } else {
             LOGGER.error("Group with id " + group.getId() + " already exists");

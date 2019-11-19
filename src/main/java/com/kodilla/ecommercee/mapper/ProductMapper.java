@@ -45,6 +45,7 @@ public class ProductMapper {
                 .map(n -> new ProductDto(n.getId(), n.getName(), n.getDescription(), n.getPrice(), n.getGroup().getId()))
                 .collect(Collectors.toList());
     }
+
     public List<Product> mapToProductList(final List<ProductDto> productDtos) throws ProductNotFoundException {
         List<Product> products = new ArrayList<>();
         for (ProductDto p : productDtos) {
