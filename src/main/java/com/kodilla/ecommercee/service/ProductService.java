@@ -3,10 +3,12 @@ package com.kodilla.ecommercee.service;
 import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
 import com.kodilla.ecommercee.repository.ProductRepository;
+import org.hibernate.annotations.LazyToOneOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.plugin2.message.Message;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
 public class ProductService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
+    private static final String MESSAGE = "No product with id: ";
 
     @Autowired
     ProductRepository repository;
@@ -23,19 +26,24 @@ public class ProductService {
     }
 
     public Product getProductById(final Long id) throws ProductNotFoundException {
-        return repository.findById(id).orElseThrow(ProductNotFoundException::new);
+        if (repository.findById(id).isPresent()) {
+            return repository.findById(id).get();
+        } else {
+            LOGGER.error(MESSAGE + id);
+            throw new ProductNotFoundException(MESSAGE + id);
+        }
     }
 
-    public Product saveProduct(Product product) {
-        return repository.save(product);
+    public void saveProduct(Product product) {
+        repository.save(product);
     }
 
     public Product updateProduct(Product product) throws ProductNotFoundException {
         if (repository.existsById(product.getId())) {
-            return saveProduct(product);
+            return repository.save(product);
         } else {
-            LOGGER.error("Product id: " + product.getId() + " not found.");
-            throw new ProductNotFoundException();
+            LOGGER.error(MESSAGE + product.getId() + " to update.");
+            throw new ProductNotFoundException(MESSAGE + product.getId() + " to update.");
         }
     }
 
@@ -43,8 +51,8 @@ public class ProductService {
         if (repository.existsById(id)) {
             repository.deleteById(id);
         } else {
-            LOGGER.error("Product id: " + id + " not found.");
-            throw new ProductNotFoundException("Product id: " + id + " not found.");
+            LOGGER.error(MESSAGE + id + " to delete.");
+            throw new ProductNotFoundException(MESSAGE + id + " to delete.");
         }
     }
 }

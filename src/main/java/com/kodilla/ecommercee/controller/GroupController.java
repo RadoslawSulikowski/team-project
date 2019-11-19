@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee.controller;
 
+import com.kodilla.ecommercee.domain.Group;
 import com.kodilla.ecommercee.domain.GroupDto;
 import com.kodilla.ecommercee.exceptions.CartNotFoundException;
 import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
@@ -18,7 +19,6 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/v1/group")
 public class GroupController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(GroupController.class);
     @Autowired
     GroupService groupService;
 
@@ -31,13 +31,8 @@ public class GroupController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getGroup")
-    public GroupDto getGroup(@RequestParam Long groupId) {
-        try {
-            return groupMapper.mapToGroupDto(groupService.getGroupById(groupId));
-        } catch(GroupNotFoundException e) {
-            LOGGER.error(e.getMessage(), e);
-            return new GroupDto();
-        }
+    public GroupDto getGroup(@RequestParam Long groupId) throws GroupNotFoundException {
+        return groupMapper.mapToGroupDto(groupService.getGroupById(groupId));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addGroup", consumes = APPLICATION_JSON_VALUE)
@@ -46,13 +41,8 @@ public class GroupController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateGroup", consumes = APPLICATION_JSON_VALUE)
-    public GroupDto updateGroup(@RequestBody GroupDto groupDto) {
-        try {
-            return groupMapper.mapToGroupDto(groupService.updateGroup(groupMapper.mapToGroup(groupDto)));
-        } catch(GroupNotFoundException e) {
-            LOGGER.error(e.getMessage(), e);
-            return groupDto;
-        }
+    public GroupDto updateGroup(@RequestBody GroupDto groupDto) throws GroupNotFoundException {
+        return groupMapper.mapToGroupDto(groupService.updateGroup(groupMapper.mapToGroup(groupDto)));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteGroup")

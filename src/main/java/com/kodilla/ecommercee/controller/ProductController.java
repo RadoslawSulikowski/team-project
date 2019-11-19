@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee.controller;
 
+import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.domain.ProductDto;
 import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
 import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
@@ -18,8 +19,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/v1/product")
 public class ProductController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
-
     @Autowired
     private ProductMapper mapper;
 
@@ -32,12 +31,8 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getProduct")
-    public ProductDto getProduct(@RequestParam Long id) {
-        try {
+    public ProductDto getProduct(@RequestParam Long id) throws ProductNotFoundException{
             return mapper.mapToProductDto(service.getProductById(id));
-        } catch (ProductNotFoundException e) {
-            LOGGER.error(e.getMessage(), e);        }
-        return new ProductDto();
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createProduct", consumes = APPLICATION_JSON_VALUE)
@@ -46,12 +41,8 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateProduct")
-    public ProductDto updateProduct(@RequestBody ProductDto productDto) {
-        try {
+    public ProductDto updateProduct(@RequestBody ProductDto productDto) throws GroupNotFoundException, ProductNotFoundException{
             return mapper.mapToProductDto(service.updateProduct(mapper.mapToProduct(productDto)));
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);        }
-        return new ProductDto();
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteProduct")
