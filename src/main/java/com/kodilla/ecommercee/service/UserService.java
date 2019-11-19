@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -17,32 +19,37 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public User saveUser(final User user) {
-        return userRepository.save(user);
+    public void saveUser(final User user) {
+        userRepository.save(user);
     }
 
     public User blockUser(final Long id) throws UserNotFoundException {
         if (userRepository.findById(id).isPresent()) {
             User user = userRepository.findById(id).get();
             user.setStatus("blocked");
-            return userRepository.save(blockUser(id));
+            return userRepository.save(user);
         } else {
             LOGGER.error(MESSAGE + id + " to block.");
             throw new UserNotFoundException(MESSAGE + id + " to block.");
         }
     }
 
-    public Long oneHourUserKey(final User user) throws UserNotFoundException {
-        if (userRepository.existsById(user.getId())) {
+    public Long oneHourUserKey(final Long userId) throws UserNotFoundException {
+        if (userRepository.findById(userId).isPresent()) {
+            User user = userRepository.findById(userId).get();
             Long userKey = generateUserKey();
             user.setUserKey(userKey);
             userRepository.save(user);
             resetUserKeyAfterOneHour(user);
             return userKey;
         } else {
-            LOGGER.error(MESSAGE + user.getId() + " to generate key.");
-            throw new UserNotFoundException(MESSAGE + user.getId() + " to generate key.");
+            LOGGER.error(MESSAGE + userId + " to generate key.");
+            throw new UserNotFoundException(MESSAGE + userId + " to generate key.");
         }
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     private Long generateUserKey() {
