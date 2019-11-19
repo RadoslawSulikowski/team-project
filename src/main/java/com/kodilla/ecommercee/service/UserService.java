@@ -46,7 +46,7 @@ public class UserService {
         );
     }
 
-    public Long oneHourUserKey(final Long user) {
+    public Long oneHourUserKey(final User user) {
         if (userRepository.existsById(user.getId())) {
             userRepository.save(user);
             Long userKey = generateUserKey();

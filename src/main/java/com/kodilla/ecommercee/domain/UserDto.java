@@ -16,6 +16,7 @@ public class UserDto {
     private String status;
     private Long userKey;
     private List<OrderDto> orders;
-    private Cart cart;
+    private Long cart;
+
 }
 
