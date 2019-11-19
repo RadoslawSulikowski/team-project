@@ -53,12 +53,13 @@ public class GroupEntityTestSuite {
         Group group3 = new Group();
 
         //When
+        int initialSizeOfRepository = groupRepository.findAll().size();
         groupRepository.save(group);
         groupRepository.save(group2);
         groupRepository.save(group3);
 
         //Then
-        Assert.assertEquals(3, groupRepository.findAll().size());
+        Assert.assertEquals(3, groupRepository.findAll().size()-initialSizeOfRepository);
 
         //CleanUp
         groupRepository.deleteById(group.getId());

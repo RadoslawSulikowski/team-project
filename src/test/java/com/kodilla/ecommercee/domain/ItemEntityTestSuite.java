@@ -50,11 +50,13 @@ public class ItemEntityTestSuite {
         Item item3 = new Item();
 
         //When
+        int initialSizeOfRepository = itemRepository.findAll().size();
         itemRepository.save(item);
         itemRepository.save(item2);
         itemRepository.save(item3);
+
         //Then
-        Assert.assertEquals(3, itemRepository.findAll().size());
+        Assert.assertEquals(3, itemRepository.findAll().size()-initialSizeOfRepository);
 
         //CleanUp
         itemRepository.deleteById(item.getId());
