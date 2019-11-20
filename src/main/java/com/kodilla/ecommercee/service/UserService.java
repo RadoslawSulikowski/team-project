@@ -64,6 +64,7 @@ public class UserService {
                     @Override
                     public void run() {
                         user.setUserKey(null);
+                        userRepository.save(user);
                     }
                 },
                 3600000

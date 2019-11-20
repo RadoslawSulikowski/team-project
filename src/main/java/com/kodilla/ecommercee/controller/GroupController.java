@@ -2,6 +2,7 @@ package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.domain.GroupDto;
 import com.kodilla.ecommercee.exceptions.GroupAlreadyExistsException;
+import com.kodilla.ecommercee.exceptions.GroupCantBeDeletedException;
 import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
 import com.kodilla.ecommercee.mapper.GroupMapper;
 import com.kodilla.ecommercee.service.GroupService;
@@ -42,7 +43,7 @@ public class GroupController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteGroup")
-    public void deleteGroup(@RequestParam Long id) throws GroupNotFoundException {
+    public void deleteGroup(@RequestParam Long id) throws GroupNotFoundException, GroupCantBeDeletedException {
         groupService.deleteGroup(id);
     }
 }
