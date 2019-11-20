@@ -48,7 +48,7 @@ public class Product {
     )
     private List<Item> items = new ArrayList<>();
 
-    public Product(@NotNull String name,@NotNull String description,@NotNull BigDecimal price) {
+    public Product(@NotNull String name, @NotNull String description, @NotNull BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;

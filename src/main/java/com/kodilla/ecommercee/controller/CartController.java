@@ -28,12 +28,8 @@ public class CartController {
     ItemMapper itemMapper;
 
     @RequestMapping(method = RequestMethod.POST, value = "createCart")
-    public void createCart(@RequestBody CartDto cartDto) {
-        try {
-            cartService.save(cartMapper.mapToCart(cartDto));
-        } catch (UserNotFoundException e) {
-            LOGGER.error(e.getMessage());
-        }
+    public void createCart(@RequestBody CartDto cartDto) throws UserNotFoundException {
+        cartService.save(cartMapper.mapToCart(cartDto));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getItems")

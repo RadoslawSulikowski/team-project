@@ -6,7 +6,6 @@ import com.kodilla.ecommercee.domain.Cart;
 import com.kodilla.ecommercee.domain.CartDto;
 import com.kodilla.ecommercee.exceptions.UserNotFoundException;
 import com.kodilla.ecommercee.repository.UserRepository;
-import com.kodilla.ecommercee.service.CartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class CartMapper {
         cart.setUser(userRepository.findById(cartDto.getUserId()).orElseThrow(UserNotFoundException::new));
         try {
             cart.setItems(itemMapper.mapToItemsList(cartDto.getItems()));
-        } catch (ProductNotFoundException e) {
+        } catch(ProductNotFoundException e) {
             LOGGER.error(e.getMessage());
         }
         return cart;

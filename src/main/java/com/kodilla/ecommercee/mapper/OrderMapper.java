@@ -55,7 +55,9 @@ public class OrderMapper {
             return orders.stream()
                     .map(t -> new OrderDto(t.getOrderId(), itemMapper.mapToItemsDtoList(t.getItems()), t.getUser().getId()))
                     .collect(Collectors.toList());
-        } else return new ArrayList<>();
+        } else {
+            return new ArrayList<>();
+        }
     }
 
 }
