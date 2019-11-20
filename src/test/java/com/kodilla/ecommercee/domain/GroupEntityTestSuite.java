@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,60 +25,87 @@ public class GroupEntityTestSuite {
     @Autowired
     private ProductRepository productRepository;
 
+    private static final String NAME = "product";
+    private static final String DESCRIPTION = "Pellentesque";
+    private static final BigDecimal PRICE = new BigDecimal(500);
+
     @Test
-    public void testSaveAndDeleteGroup() {
+    public void testSaveGroupIntoRepository() {
         //Given
-        Group group1 = new Group("Ubrania");
-        Group group2 = new Group("Zdrowie");
-        Group group3 = new Group("Elektronika");
-        Group group4 = new Group("Dom");
-        Group group5 = new Group("Ogród");
-
-        Product product1 = new Product("Bluza", "Wełniana bluza", new BigDecimal(79.99));
-        Product product2 = new Product("Spodnie", "Dżinsowe czarne spodnie", new BigDecimal(99.99));
-        Product product3 = new Product("T-shirt", "Czerwony T-shirt", new BigDecimal(74.99));
-        Product product4 = new Product("Buty", "Czarne adidasy", new BigDecimal(179.99));
-        Product product5 = new Product("Kurtka", "Kurtka zimowa", new BigDecimal(109.99));
-
-        List<Product> listOfProducts = new ArrayList<>();
-        listOfProducts.add(product1);
-        listOfProducts.add(product2);
-        listOfProducts.add(product3);
-        listOfProducts.add(product4);
-        listOfProducts.add(product5);
-
-        group1.setProducts(listOfProducts);
+        Group group = new Group();
 
         //When
-        int sizeOfRepository = groupRepository.findAll().size();                            // Checking the initial size of the repository
-        groupRepository.save(group1);
-        groupRepository.save(group2);
-        groupRepository.save(group3);
-        groupRepository.save(group4);
-        groupRepository.save(group5);
+        groupRepository.save(group);
+        Optional<Group> testGroup = groupRepository.findById(group.getId());
 
         //Then
-        int sizeOfResultListBeforeDeleting = groupRepository.findAll().size();              // Checking the size of the rep. before adding objects
-        groupRepository.deleteById(group1.getId());                                         // Deleting an instance and then checking the size again
-        int sizeOfResultListAfterDeleting = groupRepository.findAll().size();
-
-        Optional<Group> readGroup1 = groupRepository.findById(group1.getId());              // Checking if the deleted instance has in fact been deleted
-        Optional<Product> readProduct1 = productRepository.findById(product1.getId());      // After deleting the group, checking if products have been deleted as well
-
-        Assert.assertEquals(5, sizeOfResultListBeforeDeleting - sizeOfRepository);
-        Assert.assertEquals(4, sizeOfResultListAfterDeleting - sizeOfRepository);
-        Assert.assertFalse(readGroup1.isPresent());
-        Assert.assertTrue(readProduct1.isPresent());
+        Assert.assertTrue(testGroup.isPresent());
 
         //CleanUp
+        groupRepository.deleteById(group.getId());
+    }
+
+    @Test
+    public void testGetAllInstancesFromRepository() {
+        //Given
+        Group group = new Group();
+        Group group2 = new Group();
+        Group group3 = new Group();
+
+        //When
+        int initialSizeOfRepository = groupRepository.findAll().size();
+        groupRepository.save(group);
+        groupRepository.save(group2);
+        groupRepository.save(group3);
+
+        //Then
+        Assert.assertEquals(3, groupRepository.findAll().size()-initialSizeOfRepository);
+
+        //CleanUp
+        groupRepository.deleteById(group.getId());
         groupRepository.deleteById(group2.getId());
         groupRepository.deleteById(group3.getId());
-        groupRepository.deleteById(group4.getId());
-        groupRepository.deleteById(group5.getId());
-        productRepository.deleteById(product1.getId());
-        productRepository.deleteById(product2.getId());
-        productRepository.deleteById(product3.getId());
-        productRepository.deleteById(product4.getId());
-        productRepository.deleteById(product5.getId());
+    }
+
+    @Test
+    public void testDeletingGroupFromRepository() {
+        //Given
+        Group group = new Group();
+        Group group2 = new Group();
+
+        //When
+        groupRepository.save(group);
+        groupRepository.save(group2);
+        groupRepository.deleteById(group.getId());
+        groupRepository.delete(group2);
+
+        //Then
+        Assert.assertFalse(groupRepository.existsById(group.getId()));
+        Assert.assertFalse(groupRepository.existsById(group2.getId()));
+    }
+
+    @Test
+    public void testProductRelation() {
+        //Given
+        Group group = new Group();
+        Product product = new Product(NAME, DESCRIPTION, PRICE);
+        List<Product> products = group.getProducts();
+
+        //When
+        groupRepository.save(group);
+        productRepository.save(product);
+
+        product.setGroup(group);
+        products.add(product);
+        group.setProducts(products);
+
+        groupRepository.delete(group);
+
+        //Then
+        Assert.assertTrue(productRepository.existsById(product.getId()));
+        Assert.assertFalse(groupRepository.existsById(group.getId()));
+
+        //Clean up
+        productRepository.deleteById(product.getId());
     }
 }
